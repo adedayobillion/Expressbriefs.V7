@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Express Briefs — Create Once, Market Everywhere</title>
+<meta name="description" content="Turn one listing into ready-to-post copy for WhatsApp, Instagram, Facebook, TikTok and more. Built for 11 industries, from real estate to weddings.">
+<meta name="keywords" content="AI listing generator, AI marketing copy, AI copy generator, listing description generator, business description generator, product description generator, property description generator, real estate listing generator, Airbnb description generator, hotel description generator, vehicle description generator, restaurant description generator, job description generator, Google Business Profile description, SEO description generator, marketing copy generator, AI content generator, listing optimization tool, business copy generator, AI advertising copy, listing copy generator, multi-platform marketing copy, caption generator, social media copywriter, industry-specific marketing tool">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://expressbriefs.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="author" content="Express Briefs">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Express Briefs — Create Once, Market Everywhere">
+<meta property="og:description" content="Turn one listing into ready-to-post copy for every platform and every industry.">
+<meta property="og:site_name" content="Express Briefs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Express Briefs — Create Once, Market Everywhere">
+<meta name="twitter:description" content="Turn one listing into ready-to-post copy for every platform and every industry.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+  window.GTM_ID = 'GTM-5G3NRJWM';
+  window.dataLayer = window.dataLayer || [];
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
+<style>
+  /* ── Signboard identity, green + cream: leaf and forest carry the page, ──
+     gold is the one accent used sparingly (pins, numbers, one button). */
+  :root {
+    --ink:      #322E25;
+    --leaf:     #2E7A52;
+    --forest:   #1E3B2C;
+    --sage:     #86AD97;
+    --gold:     #C99A3D;
+    --paper:    #F6F3EE;
+    --paper2:   #EAF1EA;
+    --display:  "Archivo", sans-serif;
+    --body:     "Space Grotesk", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--paper); font-family: var(--body); }
+  a { text-decoration: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Sticky nav — stays calm so the panels below can be loud ── */
+  .nav { position: sticky; top: 0; z-index: 40; background: var(--paper); border-bottom: 2px solid var(--ink); }
+  .nav-in { max-width: 1180px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; }
+  .brand { display: flex; align-items: center; gap: 11px; color: var(--ink); }
+  .brand-mark { width: 38px; height: 38px; background: var(--leaf); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; border: 2px solid var(--ink); }
+  .brand-name { font-family: var(--display); font-size: 19px; font-weight: 900; letter-spacing: -0.02em; white-space: nowrap; }
+  .nav-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+  .nav-links { display: flex; align-items: center; gap: 22px; }
+  .nav-links a { color: var(--ink); font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .nav-links a:hover { color: var(--leaf); }
+  .nav-guest { display: flex; align-items: center; gap: 16px; }
+  .nav-login { color: var(--ink); font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .nav-login:hover { color: var(--leaf); }
+  .nav-signup { display: inline-flex; align-items: center; background: var(--forest); color: var(--paper); padding: 10px 18px; border-radius: 100px; font-weight: 700; font-size: 14px; white-space: nowrap; }
+  .nav-signup:hover { background: var(--leaf); }
+  .nav-account { display: none; align-items: center; gap: 12px; }
+  .nav-account-info { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.3; }
+  .nav-account-name { font-weight: 700; font-size: 13px; color: var(--ink); }
+  .nav-account-usage { font-size: 11.5px; color: rgba(50,46,37,.6); }
+  .nav-logout { background: transparent; border: 1.5px solid var(--ink); color: var(--ink); padding: 7px 14px; border-radius: 100px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+  .nav-logout:hover { background: var(--forest); border-color: var(--forest); color: var(--paper); }
+
+  /* ── Panel system: full-bleed color blocks, thick ink seams between them ── */
+  .panel { border-bottom: 2px solid var(--ink); }
+  .panel-inner { max-width: 1180px; margin: 0 auto; padding: 72px 24px; }
+  .panel-mint { background: var(--paper2); }
+  .panel-ink, .panel-dark { background: var(--forest); color: var(--paper); }
+  .panel-leaf { background: var(--leaf); color: var(--paper); overflow: hidden; }
+  .panel-forest { background: var(--forest); color: var(--paper); }
+  .panel-paper { background: var(--paper); }
+
+  /* ── Hero ── */
+  .hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero h1 { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 5.6vw, 68px); line-height: 0.98; letter-spacing: -0.03em; color: var(--ink); margin: 0 0 22px; }
+  .hero-copy { font-size: 17.5px; line-height: 1.6; color: rgba(50,46,37,.78); max-width: 34rem; margin: 0 0 28px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  .cta-primary, .cta-secondary { display: inline-flex; align-items: center; gap: 9px; padding: 15px 22px; border-radius: 12px; font-weight: 700; font-size: 15px; border: 1.75px solid var(--ink); }
+  .cta-primary { background: var(--forest); color: var(--paper); box-shadow: 4px 4px 0 rgba(50,46,37,.22); }
+  .cta-primary:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(50,46,37,.32); }
+  .cta-secondary { background: var(--paper); color: var(--ink); }
+  .cta-secondary:hover { background: var(--forest); border-color: var(--forest); color: var(--paper); }
+  .cta-primary, .cta-secondary { transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px 10px; }
+  .hero-tag { font-size: 12.5px; font-weight: 600; color: var(--ink); background: rgba(255,255,255,.45); border: 1.5px solid rgba(50,46,37,.3); border-radius: 100px; padding: 6px 12px; }
+
+  /* ── Hero visual: a stack of output "stickers" pinned around the one input ── */
+  .stickerboard { position: relative; height: 420px; }
+  .sticker { position: absolute; background: var(--paper); border: 1.75px solid var(--ink); border-radius: 14px; padding: 14px 16px; box-shadow: 4px 4px 0 rgba(50,46,37,.28); width: 220px; }
+  .sticker-label { font-family: var(--display); font-weight: 800; font-size: 11.5px; letter-spacing: .01em; margin-bottom: 5px; }
+  .sticker-text { font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+  .sticker-input { z-index: 5; top: 34px; left: 6%; width: 250px; background: var(--forest); color: var(--paper); transform: rotate(-3deg); box-shadow: 4px 4px 0 rgba(50,46,37,.22); }
+  .sticker-input .sticker-label { color: var(--gold); }
+  .sticker-input .sticker-text { color: var(--paper); font-size: 13px; }
+  .sticker-ig  { top: 6px;   right: 4%;  transform: rotate(4deg);   z-index: 4; }
+  .sticker-ig  .sticker-label { color: var(--gold); }
+  .sticker-wa  { top: 190px; left: 0;    transform: rotate(-6deg);  z-index: 3; }
+  .sticker-wa  .sticker-label { color: var(--leaf); }
+  .sticker-fb  { top: 236px; right: 8%;  transform: rotate(3deg);   z-index: 2; }
+  .sticker-fb  .sticker-label { color: var(--forest); }
+  .sticker-li  { bottom: 4px; left: 20%; transform: rotate(-2deg);  z-index: 1; width: 200px; }
+  .sticker-li  .sticker-label { color: var(--ink); }
+
+  /* ── Proof ribbon (ink panel) ── */
+  .ribbon { display: flex; flex-wrap: wrap; gap: 0; border-top: 2px solid rgba(246,243,238,.25); border-bottom: 2px solid rgba(246,243,238,.25); }
+  .stat { flex: 1 1 200px; padding: 22px 24px; border-right: 2px solid rgba(246,243,238,.25); }
+  .stat:last-child { border-right: none; }
+  .stat strong { display: block; font-family: var(--display); font-weight: 900; font-size: 40px; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .stat span { font-size: 13px; color: rgba(246,243,238,.75); }
+
+  /* ── Section heads ── */
+  .shead { margin-bottom: 30px; max-width: 44rem; }
+  .shead h2 { font-family: var(--display); font-weight: 900; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.04; letter-spacing: -0.02em; margin: 0 0 10px; }
+  .shead p { font-size: 15.5px; line-height: 1.6; opacity: .82; margin: 0; }
+
+  /* ── Industry signboard tiles ── */
+  .industry-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+  .tile { display: flex; flex-direction: column; gap: 12px; border: 1.75px solid var(--ink); border-radius: 16px; padding: 20px; color: var(--ink); box-shadow: 4px 4px 0 rgba(50,46,37,.28); transition: transform .12s ease, box-shadow .12s ease; }
+  .tile:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(50,46,37,.32); }
+  .tile-c0 { background: var(--leaf); color: var(--paper); } .tile-c1 { background: var(--paper); }
+  .tile-c2 { background: var(--paper2); }   .tile-c3 { background: #F0DFB8; }
+  .tile-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--forest); color: var(--paper); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  .tile-c0 h3 { color: var(--paper); }
+  .tile-c0 .tile-icon { background: var(--paper); color: var(--ink); }
+  .tile-c0 p { color: rgba(246,243,238,.82); opacity: 1; }
+  .tile h3 { font-family: var(--display); font-size: 16.5px; font-weight: 800; margin: 0; }
+  .tile p { font-size: 13px; line-height: 1.55; margin: 0; opacity: .82; }
+  .industry-grid-extra[hidden] { display: none; }
+  .industry-grid-extra { margin-top: 16px; }
+  .toggle-row { display: flex; justify-content: center; margin-top: 22px; }
+  .show-all-btn { background: var(--paper); border: 1.75px solid var(--ink); color: var(--ink); font-weight: 700; font-size: 13.5px; padding: 11px 20px; border-radius: 100px; cursor: pointer; }
+  .show-all-btn:hover { background: var(--forest); border-color: var(--forest); color: var(--paper); }
+
+  /* ── How it works: ticket strip (leaf panel) ── */
+  .ticket-row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+  .ticket { background: var(--paper); color: var(--ink); border-radius: 14px; padding: 22px 20px; position: relative; box-shadow: 4px 4px 0 rgba(50,46,37,.16); }
+  .ticket::before, .ticket::after { content: ""; position: absolute; top: 50%; width: 20px; height: 20px; background: var(--gold); border-radius: 50%; transform: translateY(-50%); }
+  .ticket::before { left: -10px; } .ticket::after { right: -10px; }
+  .ticket-num { font-family: var(--display); font-weight: 900; font-size: 15px; color: var(--paper); background: var(--forest); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+  .ticket h3 { font-family: var(--display); font-size: 16.5px; font-weight: 800; margin: 0 0 8px; }
+  .ticket p { font-size: 13.5px; line-height: 1.6; margin: 0; opacity: .82; }
+
+  /* ── Testimonials: pinned notes (paper panel) ── */
+  .note-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; padding-top: 6px; }
+  .note { position: relative; background: var(--paper); border: 1.75px solid var(--ink); border-radius: 4px; padding: 22px 18px 18px; box-shadow: 5px 5px 0 rgba(50,46,37,.10); }
+  .note:nth-child(1) { transform: rotate(-1.4deg); }
+  .note:nth-child(2) { transform: rotate(1deg); }
+  .note:nth-child(3) { transform: rotate(-0.6deg); }
+  .note-pin { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); }
+  .note:nth-child(1) .note-pin { background: var(--gold); }
+  .note:nth-child(2) .note-pin { background: var(--leaf); }
+  .note:nth-child(3) .note-pin { background: var(--forest); }
+  .note p { font-size: 13.5px; line-height: 1.6; color: var(--ink); margin: 0 0 14px; }
+  .note-author { font-size: 12px; color: rgba(50,46,37,.62); }
+  .note-author strong { color: var(--ink); font-weight: 700; }
+  .proof-note { font-size: 12px; color: rgba(50,46,37,.55); margin: 22px 2px 0; }
+
+  /* ── Final CTA (forest panel) ── */
+  .final { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .final h2 { font-family: var(--display); font-weight: 900; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.08; margin: 0 0 8px; }
+  .final p { font-size: 15px; opacity: .9; margin: 0; }
+  .final .cta-primary { background: var(--gold); border-color: var(--ink); color: var(--ink); box-shadow: 4px 4px 0 rgba(0,0,0,.18); }
+
+  /* ── Footer ── */
+  .foot { background: var(--forest); color: rgba(246,243,238,.7); }
+  .foot-in { max-width: 1180px; margin: 0 auto; padding: 26px 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 12.5px; }
+  .foot a { color: rgba(246,243,238,.85); font-weight: 600; }
+  .foot a:hover { color: var(--gold); }
+
+  @media (max-width: 980px) {
+    .hero { grid-template-columns: 1fr; }
+    .stickerboard { height: 340px; margin-top: 8px; }
+    .industry-grid, .ticket-row, .note-grid { grid-template-columns: 1fr 1fr; }
+    .stat { flex: 1 1 45%; }
+  }
+  @media (max-width: 640px) {
+    .ticket::before, .ticket::after { display: none; }
+    .panel-inner { padding: 52px 18px; }
+    .nav-in { padding: 12px 16px; gap: 10px; }
+    .nav-actions { gap: 8px; }
+    .nav-links { display: none; }
+    .brand-name { font-size: 15.5px; }
+    .brand-mark { width: 32px; height: 32px; }
+    .nav-login { font-size: 12.5px; }
+    .nav-signup { font-size: 12.5px; padding: 8px 13px; }
+    .industry-grid, .ticket-row, .note-grid { grid-template-columns: 1fr; }
+    .note { transform: none !important; }
+    .stat { flex: 1 1 100%; border-right: none; border-bottom: 2px solid rgba(246,243,238,.25); }
+    .stat:last-child { border-bottom: none; }
+    .final { flex-direction: column; align-items: flex-start; }
+    .stickerboard { height: auto; position: static; display: flex; flex-direction: column; gap: 14px; }
+    .sticker { position: static; width: auto !important; transform: none !important; box-shadow: 4px 4px 0 rgba(50,46,37,.28); }
+    .foot-in { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/">
+      <div class="brand-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 3a1 1 0 0 1 1-1h7l6 6v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3z" fill="white" opacity="0.95"/>
+          <path d="M13 2v5a1 1 0 0 0 1 1h5" fill="white" opacity="0.35"/>
+        </svg>
+      </div>
+      <span class="brand-name">Express Briefs</span>
+    </a>
+    <div class="nav-actions">
+      <div class="nav-links">
+        <a href="/pricing/">Pricing</a>
+        <a href="/developers/">API</a>
+      </div>
+      <div id="topbarGuest" class="nav-guest">
+        <a class="nav-login" href="/real-estate/?auth=login">Log in</a>
+        <a class="nav-signup" href="/real-estate/?auth=register">Get started</a>
+      </div>
+      <div id="topbarAccount" class="nav-account">
+        <div class="nav-account-info">
+          <span class="nav-account-name" id="topbarUserName"></span>
+          <span class="nav-account-usage" id="topbarUserUsage"></span>
+        </div>
+        <button type="button" class="nav-logout" id="topbarLogoutBtn">Log out</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <section class="panel panel-mint">
+    <div class="panel-inner hero">
+      <div>
+        <h1>One brief.<br>Every platform,<br>in its own voice.</h1>
+        <p class="hero-copy">Write the details once. Get back copy that already sounds right for WhatsApp, Instagram, Facebook, LinkedIn, TikTok, Snapchat, Reddit and Quora — tuned for real estate, cars, food, fitness, weddings and seven other trades.</p>
+        <div class="cta-row">
+          <a class="cta-primary" href="/real-estate/" id="heroPrimaryCta">Try it free with Real Estate</a>
+          <a class="cta-secondary" href="#industries">See all 11 industries</a>
+        </div>
+        <div class="hero-tags">
+          <span class="hero-tag">Paste the brief once</span>
+          <span class="hero-tag">Every platform gets its own tone</span>
+          <span class="hero-tag">Built industry by industry</span>
+        </div>
+      </div>
+
+      <div class="stickerboard" aria-label="One listing turned into captions for four platforms">
+        <div class="sticker sticker-input">
+          <div class="sticker-label">The brief</div>
+          <div class="sticker-text">Luxury 2-bed apartment in Lekki, pool, gym, 24/7 power, rooftop view.</div>
+        </div>
+        <div class="sticker sticker-ig">
+          <div class="sticker-label">Instagram</div>
+          <div class="sticker-text">Luxury living in Lekki, with the kind of finish that gets attention. ✨</div>
+        </div>
+        <div class="sticker sticker-wa">
+          <div class="sticker-label">WhatsApp</div>
+          <div class="sticker-text">Available now: sleek 2-bed apartment, pool, gym, 24/7 power. 📲</div>
+        </div>
+        <div class="sticker sticker-fb">
+          <div class="sticker-label">Facebook</div>
+          <div class="sticker-text">Perfect for families and professionals — clean, modern, ready to view.</div>
+        </div>
+        <div class="sticker sticker-li">
+          <div class="sticker-label">LinkedIn</div>
+          <div class="sticker-text">Positioned for buyers who value location and lifestyle.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TODO: replace the numbers below with real figures before shipping — do not
+       launch with placeholder social proof presented as real. Pull from analytics
+       once you have them. -->
+  <section class="panel panel-ink" aria-label="Usage figures">
+    <div class="panel-inner" style="padding-top:0; padding-bottom:0;">
+      <div class="ribbon">
+        <div class="stat"><strong>300</strong><span>Briefs generated</span></div>
+        <div class="stat"><strong>50</strong><span>Active users</span></div>
+        <div class="stat"><strong>9</strong><span>Platform formats</span></div>
+        <div class="stat"><strong>11</strong><span>Industries covered</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel panel-paper" id="industries">
+    <div class="panel-inner">
+      <div class="shead">
+        <h2>Built for the way people sell.</h2>
+        <p>Each industry page speaks the language of its market, so visitors see themselves in the product immediately.</p>
+      </div>
+
+      <div class="industry-grid">
+        <a class="tile tile-c0" href="/real-estate/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg></div>
+          <h3>Real Estate</h3>
+          <p>Built for agents, Airbnb hosts and developers.</p>
+        </a>
+        <a class="tile tile-c1" href="/automotive/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/><path d="M3 17V11l2-5h10l4 5v6"/></svg></div>
+          <h3>Automotive</h3>
+          <p>Built for used car dealers and auto brokers.</p>
+        </a>
+        <a class="tile tile-c2" href="/ecommerce/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3M3 9h18l-1 11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2L3 9Z"/><path d="M8 12v3M16 12v3"/></svg></div>
+          <h3>E-Commerce</h3>
+          <p>Built for online sellers, Etsy shops and small brands.</p>
+        </a>
+        <a class="tile tile-c3" href="/restaurants/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a3 3 0 0 0 3 3v8M9 3v10M12 3v10M18 3c-2 2-2 5 0 7v10"/></svg></div>
+          <h3>Restaurants &amp; Food</h3>
+          <p>Built for restaurants, food trucks and home chefs.</p>
+        </a>
+      </div>
+
+      <div class="industry-grid industry-grid-extra" id="industryGridExtra" hidden>
+        <a class="tile tile-c0" href="/fitness/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8v8M20 8v8M2 10v4M22 10v4M7 8v8M17 8v8"/></svg></div>
+          <h3>Fitness &amp; Wellness</h3>
+          <p>Built for gyms, studios and personal trainers.</p>
+        </a>
+        <a class="tile tile-c1" href="/recruitment/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8Z"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
+          <h3>Recruitment &amp; Staffing</h3>
+          <p>Built for recruiters and hiring managers.</p>
+        </a>
+        <a class="tile tile-c2" href="/events/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 0 0 4v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 0 1 0-4V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3Z"/></svg></div>
+          <h3>Events &amp; Ticketing</h3>
+          <p>Built for promoters, venues and ticket sellers.</p>
+        </a>
+        <a class="tile tile-c3" href="/local-services/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2 2.8-2.8Z"/></svg></div>
+          <h3>Local Services</h3>
+          <p>Built for cleaners, electricians and salons.</p>
+        </a>
+        <a class="tile tile-c0" href="/hospitality/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="M8 9V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3M3 13h18"/></svg></div>
+          <h3>Hospitality &amp; Travel</h3>
+          <p>Built for hotels, resorts and tour operators.</p>
+        </a>
+        <a class="tile tile-c1" href="/fashion-resale/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l3 3 1-1v10h8V9l1 1 3-3-4-4-2 2h-4l-2-2Z"/></svg></div>
+          <h3>Fashion &amp; Resale</h3>
+          <p>Built for boutiques, thrift resellers and stylists.</p>
+        </a>
+        <a class="tile tile-c2" href="/wedding-vendors/">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-5-10-9.3C.4 8.3 2 4 6 4c2.2 0 3.8 1.3 6 4 2.2-2.7 3.8-4 6-4 4 0 5.6 4.3 4 7.7C19.5 16 12 21 12 21Z"/></svg></div>
+          <h3>Weddings &amp; Event Vendors</h3>
+          <p>Built for photographers, caterers and planners.</p>
+        </a>
+      </div>
+
+      <div class="toggle-row">
+        <button type="button" class="show-all-btn" id="showAllIndustriesBtn" aria-expanded="false" aria-controls="industryGridExtra">Show all 11 industries ↓</button>
+      </div>
+
+      <div class="cta-row" style="margin-top:34px">
+        <a class="cta-secondary" href="/pricing/">See pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel panel-leaf">
+    <div class="panel-inner">
+      <div class="shead">
+        <h2>How it works</h2>
+        <p>The flow is intentionally simple. That makes the promise easy to understand and the product easy to trust.</p>
+      </div>
+      <div class="ticket-row">
+        <div class="ticket">
+          <div class="ticket-num">1</div>
+          <h3>Enter the brief</h3>
+          <p>Drop in the details of your property, product, service, event or role once.</p>
+        </div>
+        <div class="ticket">
+          <div class="ticket-num">2</div>
+          <h3>Get channel-ready copy</h3>
+          <p>We generate captions and descriptions tailored to each platform and audience.</p>
+        </div>
+        <div class="ticket">
+          <div class="ticket-num">3</div>
+          <h3>Copy, post and follow up</h3>
+          <p>Publish faster, look more consistent, and spend less time rewriting the same message.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel panel-paper">
+    <div class="panel-inner">
+      <div class="shead">
+        <h2>What people are posting.</h2>
+        <p>Real people, real trades — the same brief doing the work across every listing site and social feed.</p>
+      </div>
+      <div class="note-grid">
+        <div class="note">
+          <div class="note-pin"></div>
+          <p>"I can now write my property briefs in seconds. My descriptions on Zillow and Airbnb are different now, and they attract more buyers and guests."</p>
+          <div class="note-author"><strong>Xpress Homes</strong> · Real Estate Agent</div>
+        </div>
+        <div class="note">
+          <div class="note-pin"></div>
+          <p>"Posting my cars has gotten so much easier. I used to struggle to write captions — Express Briefs handles that for me now, and I do better business because of it."</p>
+          <div class="note-author"><strong>Billy Autos</strong> · Auto Dealer</div>
+        </div>
+        <div class="note">
+          <div class="note-pin"></div>
+          <p>"My products get seen on Shopify and Etsy now, because my listing details are better. Highly recommended for any business owner."</p>
+          <div class="note-author"><strong>Lindsey Stores</strong> · E-Commerce Seller</div>
+        </div>
+      </div>
+      <p class="proof-note">Early testimonials from Express Briefs users.</p>
+    </div>
+  </section>
+
+  <section class="panel panel-forest">
+    <div class="panel-inner final">
+      <div>
+        <h2>Pick a trade and start with one brief.</h2>
+        <p>Once the message is clear, the product sells itself.</p>
+      </div>
+      <a class="cta-primary" href="/real-estate/">Start with Real Estate</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <span>© <span id="footYear"></span> Express Briefs. Create once. Market everywhere.</span>
+    <span><a href="/pricing/">Pricing</a> · <a href="/developers/">API</a> · <a href="/legal/">Legal</a></span>
+  </div>
+</footer>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p>We use essential local storage to keep you signed in — that's always on and never optional. We'd also like to use <strong>Google Analytics</strong> to understand how people use Express Briefs and improve it. See our <a href="/legal/">Cookie Policy</a> for details.</p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-banner-dismiss" onclick="setCookieConsent(false)">Necessary only</button>
+    <button class="cookie-banner-accept" onclick="setCookieConsent(true)">Accept analytics</button>
+  </div>
+</div>
+<script src="/assets/analytics.js" defer></script>
+<script>
+document.getElementById('footYear').textContent = new Date().getFullYear();
+
+(function () {
+  var token = localStorage.getItem('ps_token');
+  var guestEl = document.getElementById('topbarGuest');
+  var accountEl = document.getElementById('topbarAccount');
+  if (!token) return; // default guest state already visible, nothing to do
+
+  fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (!data || data.error || !data.user) { localStorage.removeItem('ps_token'); return; }
+      var user = data.user, usage = data.usage || {};
+      var firstName = (user.name || 'there').split(' ')[0];
+      document.getElementById('topbarUserName').textContent = 'Hi, ' + firstName;
+      if (typeof usage.used === 'number' && typeof usage.limit === 'number') {
+        document.getElementById('topbarUserUsage').textContent = usage.used + ' / ' + usage.limit + ' listings this month';
+      }
+      guestEl.style.display = 'none';
+      accountEl.style.display = 'flex';
+    })
+    .catch(function () { /* network hiccup — leave guest state showing */ });
+
+  document.getElementById('topbarLogoutBtn').addEventListener('click', function () {
+    localStorage.removeItem('ps_token');
+    accountEl.style.display = 'none';
+    guestEl.style.display = 'flex';
+  });
+})();
+</script>
+<script>
+(function () {
+  var btn = document.getElementById('showAllIndustriesBtn');
+  var extra = document.getElementById('industryGridExtra');
+  if (!btn || !extra) return;
+  btn.addEventListener('click', function () {
+    var isHidden = extra.hasAttribute('hidden');
+    if (isHidden) {
+      extra.removeAttribute('hidden');
+      btn.textContent = 'Show fewer industries ↑';
+      btn.setAttribute('aria-expanded', 'true');
+    } else {
+      extra.setAttribute('hidden', '');
+      btn.textContent = 'Show all 11 industries ↓';
+      btn.setAttribute('aria-expanded', 'false');
+      extra.scrollIntoView({ block: 'nearest' });
+    }
+  });
+})();
+
+// Prefetch the most likely next page (Real Estate) on hover/touch so the
+// click feels instant. Cheap win, no framework needed.
+(function () {
+  var done = false;
+  function prefetchRealEstate() {
+    if (done) return;
+    done = true;
+    var link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = '/real-estate/';
+    document.head.appendChild(link);
+  }
+  var triggers = document.querySelectorAll('a[href="/real-estate/"]');
+  triggers.forEach(function (el) {
+    el.addEventListener('mouseenter', prefetchRealEstate, { once: true });
+    el.addEventListener('touchstart', prefetchRealEstate, { once: true, passive: true });
+  });
+})();
+</script>
+</body>
+</html>
