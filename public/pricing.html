@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing | Express Briefs</title>
+<meta name="description" content="Simple, global pricing for Express Briefs — free to start, plans from $5/mo. No lock-in, cancel anytime.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="canonical" href="https://expressbriefs.com/pricing">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pricing | Express Briefs">
+<meta property="og:description" content="Simple, global pricing for Express Briefs — free to start, plans from $5/mo. No lock-in, cancel anytime.">
+<meta property="og:url" content="https://expressbriefs.com/pricing">
+<!-- ══════════ GOOGLE TAG MANAGER (consent-gated, see /assets/analytics.js) ══════════ -->
+<script>
+  window.GTM_ID = 'GTM-5G3NRJWM';
+  window.dataLayer = window.dataLayer || [];
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Express Briefs",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "offers": [
+    {"@type":"Offer","name":"Free","price":"0","priceCurrency":"USD","description":"5 listings/mo"},
+    {"@type":"Offer","name":"Starter","price":"5","priceCurrency":"USD","description":"50 listings/mo"},
+    {"@type":"Offer","name":"Pro","price":"12","priceCurrency":"USD","description":"200 listings/mo"},
+    {"@type":"Offer","name":"Agency","price":"25","priceCurrency":"USD","description":"999 listings/mo"}
+  ]
+}
+</script>
+<style>
+:root {
+  --ink:#322E25; --sage:#1E3B2C; --leaf:#2E7A52; --mint:#7ec8a0; --lime:#C99A3D;
+  --paper:#f6f3ee; --paper2:#ede9e1; --white:#ffffff; --td:#322E25; --tl:#f6f3ee;
+  --muted:rgba(50,46,37,0.62); --border:rgba(50,46,37,0.09); --r:12px; --r-lg:18px;
+  --serif:"Archivo",sans-serif; --sans:"Space Grotesk",sans-serif; --mono:"JetBrains Mono",monospace;
+  --shadow-md:0 4px 24px rgba(50,46,37,0.1);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--sans); color:var(--td); background:var(--paper); line-height:1.6; }
+.wrap { max-width:920px; margin:0 auto; padding:0 24px; }
+header { padding:22px 0; border-bottom:1px solid var(--border); }
+.brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); width:fit-content; }
+.brand-mark { width:34px; height:34px; background:var(--leaf); border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.brand-name { font-weight:800; font-size:17px; letter-spacing:-0.01em; }
+h1 { font-size:clamp(28px,4.2vw,42px); font-weight:800; letter-spacing:-0.02em; line-height:1.12; margin:48px 0 12px; text-align:center; }
+.sub { font-size:16px; color:rgba(50,46,37,0.65); max-width:520px; margin:0 auto 44px; text-align:center; }
+.plan-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:56px; }
+.plan-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--r-lg); padding:26px 22px; }
+.plan-card.hot { border-color:var(--leaf); box-shadow:var(--shadow-md); position:relative; }
+.plan-card.hot::before { content:'Most Popular'; position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--leaf); color:#fff; font-size:10.5px; font-weight:700; padding:4px 12px; border-radius:20px; text-transform:uppercase; letter-spacing:0.04em; }
+.plan-name { font-weight:800; font-size:15px; margin-bottom:10px; }
+.plan-card.hot .plan-name { color:var(--leaf); }
+.plan-price { font-family:var(--serif,serif); font-size:32px; font-weight:800; margin-bottom:4px; }
+.plan-price span { font-size:14px; font-weight:500; color:var(--muted); }
+.plan-quota { font-size:12.5px; color:var(--muted); margin-bottom:18px; }
+.plan-cta { display:block; text-align:center; background:var(--paper2); color:var(--ink); font-weight:700; font-size:13.5px; padding:11px; border-radius:9px; text-decoration:none; }
+.plan-card.hot .plan-cta { background:var(--leaf); color:#fff; }
+
+.api-section { max-width:920px; margin:0 auto 60px; }
+.api-head { text-align:center; margin-bottom:28px; }
+.api-head h2 { font-size:24px; font-weight:800; letter-spacing:-0.01em; margin-bottom:8px; }
+.api-head p { font-size:14.5px; color:var(--muted); max-width:520px; margin:0 auto; }
+.api-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:18px; }
+.api-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--r-lg); padding:22px 20px; }
+.api-card.hot { border-color:var(--leaf); box-shadow:var(--shadow-md); position:relative; }
+.api-card.hot::before { content:'Most Popular'; position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--leaf); color:#fff; font-size:10px; font-weight:700; padding:4px 11px; border-radius:20px; text-transform:uppercase; letter-spacing:0.04em; }
+.api-card .plan-name { font-weight:800; font-size:14px; margin-bottom:8px; }
+.api-card.hot .plan-name { color:var(--leaf); }
+.api-card .plan-price { font-family:var(--serif,serif); font-size:26px; font-weight:800; margin-bottom:4px; }
+.api-card .plan-price span { font-size:13px; font-weight:500; color:var(--muted); }
+.api-card .plan-quota { font-size:12px; color:var(--muted); margin-bottom:2px; }
+.api-card .plan-rate { font-size:11.5px; color:var(--muted); margin-bottom:16px; }
+.api-card .plan-cta { display:block; text-align:center; background:var(--paper2); color:var(--ink); font-weight:700; font-size:13px; padding:10px; border-radius:9px; text-decoration:none; }
+.api-card.hot .plan-cta { background:var(--leaf); color:#fff; }
+.api-note { text-align:center; font-size:12.5px; color:var(--muted); }
+.api-note a { color:var(--sage); font-weight:600; }
+@media (max-width:760px) { .api-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:480px) { .api-grid { grid-template-columns:1fr; } }
+.faq-section { max-width:640px; margin:0 auto 60px; }
+.faq-section h2 { font-size:20px; font-weight:800; margin-bottom:18px; text-align:center; }
+details { background:var(--white); border:1.5px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:10px; }
+summary { cursor:pointer; font-weight:600; font-size:14.5px; list-style:none; }
+summary::-webkit-details-marker { display:none; }
+summary::after { content:'+'; float:right; color:var(--leaf); }
+details[open] summary::after { content:'\2212'; }
+details p { font-size:13.5px; color:var(--muted); margin-top:10px; }
+.cta-band { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:36px 32px; text-align:center; margin:56px 0; }
+.cta-band a { display:inline-flex; background:var(--leaf); color:white; font-weight:700; font-size:14.5px; padding:14px 26px; border-radius:10px; text-decoration:none; margin-top:14px; }
+footer { border-top:1px solid var(--border); padding:26px 0 40px; text-align:center; font-size:12px; color:var(--muted); }
+footer a { color:var(--muted); }
+@media (max-width:760px) { .plan-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:480px) { .plan-grid { grid-template-columns:1fr; } }
+.cookie-banner { position: fixed; left: 16px; right: 16px; bottom: 16px; max-width: 480px; margin: 0 auto; background: var(--ink); color: var(--tl,#f6f3ee); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow-md,0 4px 24px rgba(50,46,37,0.1)); z-index: 1500; transform: translateY(140%); opacity: 0; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); }
+.cookie-banner.show { transform: translateY(0); opacity: 1; }
+.cookie-banner p { font-size: 12.5px; line-height: 1.6; color: rgba(246,243,238,0.8); margin-bottom: 12px; }
+.cookie-banner a { color: var(--mint,#7ec8a0); }
+.cookie-banner-actions { display: flex; gap: 10px; }
+.cookie-banner-actions button { flex: 1; padding: 9px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--sans); border: none; }
+.cookie-banner-accept { background: var(--leaf); color: white; }
+.cookie-banner-accept:hover { background: var(--sage); }
+.cookie-banner-dismiss { background: rgba(246,243,238,0.1); color: var(--tl,#f6f3ee); }
+.cookie-banner-dismiss:hover { background: rgba(246,243,238,0.18); }
+@media (max-width: 520px) { .cookie-banner { left: 10px; right: 10px; bottom: 10px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a href="/" class="brand">
+      <div class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M5 3a1 1 0 0 1 1-1h7l6 6v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3z" fill="currentColor" opacity="0.92"/>
+      <path d="M13 2v5a1 1 0 0 0 1 1h5" fill="white" opacity="0.22"/>
+      <path d="M7.5 13.2h4.2M7.5 16h6.2" stroke="white" stroke-width="1.3" stroke-linecap="round" opacity="0.5"/>
+      <path d="M16.6 6.2l-3.4 5.6h2.1l-1.5 4.6 5-6.4h-2.4l1.7-3.8z" fill="white"/>
+    </svg></div>
+      <span class="brand-name">Express Briefs</span>
+    </a>
+  </div>
+</header>
+
+<div class="wrap">
+  <h1>Simple, global pricing</h1>
+  <p class="sub">Free to start. Upgrade when you need more. Cancel anytime — no lock-in, no long-term contracts.</p>
+
+  <div class="plan-grid">
+    <div class="plan-card">
+      <div class="plan-name">Free</div>
+      <div class="plan-price">$0</div>
+      <div class="plan-quota">5 listings / month</div>
+      <a href="/real-estate/" id="planFree" class="plan-cta">Start Free</a>
+    </div>
+    <div class="plan-card hot">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$5<span>/mo</span></div>
+      <div class="plan-quota">50 listings / month</div>
+      <a href="/real-estate/?plan=starter" id="planStarter" class="plan-cta">Get Starter</a>
+    </div>
+    <div class="plan-card">
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">$12<span>/mo</span></div>
+      <div class="plan-quota">200 listings / month</div>
+      <a href="/real-estate/?plan=pro" id="planPro" class="plan-cta">Get Pro</a>
+    </div>
+    <div class="plan-card">
+      <div class="plan-name">Agency</div>
+      <div class="plan-price">$25<span>/mo</span></div>
+      <div class="plan-quota">999 listings / month</div>
+      <a href="/real-estate/?plan=agency" id="planAgency" class="plan-cta">Get Agency</a>
+    </div>
+  </div>
+
+  <script>
+    // If the visitor arrived from a specific industry's page (via
+    // /pricing?industry=automotive), keep them in that industry's app
+    // instead of dropping them into real-estate by default.
+    (function(){
+      var params = new URLSearchParams(window.location.search);
+      var ind = params.get('industry');
+      var valid = ['real-estate','automotive','ecommerce','restaurants','fitness','recruitment','events','local-services','hospitality','fashion-resale','wedding-vendors'];
+      if(ind && valid.indexOf(ind) !== -1){
+        document.getElementById('planFree').href = '/'+ind+'/';
+        document.getElementById('planStarter').href = '/'+ind+'/?plan=starter';
+        document.getElementById('planPro').href = '/'+ind+'/?plan=pro';
+        document.getElementById('planAgency').href = '/'+ind+'/?plan=agency';
+      }
+    })();
+  </script>
+
+  <div class="api-section">
+    <div class="api-head">
+      <h2>Building an integration? API pricing</h2>
+      <p>Separate from the plans above — for generating captions from your own website or app. Every account starts on a free tier.</p>
+    </div>
+    <div class="api-grid" id="apiGrid" aria-live="polite">
+      <div class="api-card"><div class="plan-name">Loading plans…</div></div>
+    </div>
+    <p class="api-note">Full reference, code samples and key management at <a href="/developers/">/developers</a>.</p>
+  </div>
+
+  <script>
+    (function () {
+      var MOST_POPULAR = 'builder'; // highlight one tier; keep in sync with database.js API_PLANS
+      fetch('/api/v1/plans').then(function (r) { return r.json(); }).then(function (d) {
+        var grid = document.getElementById('apiGrid');
+        grid.innerHTML = d.plans.map(function (p) {
+          var name = p.name.charAt(0).toUpperCase() + p.name.slice(1);
+          var hot = p.name === MOST_POPULAR;
+          return '<div class="api-card' + (hot ? ' hot' : '') + '">' +
+            '<div class="plan-name">' + name + '</div>' +
+            '<div class="plan-price">' + (p.price_usd ? '$' + p.price_usd + '<span>/mo</span>' : '$0') + '</div>' +
+            '<div class="plan-quota">' + p.monthly_limit.toLocaleString() + ' generations / month</div>' +
+            '<div class="plan-rate">' + p.rate_limit_per_min + ' requests / min</div>' +
+            '<a href="/developers/#plans" class="plan-cta">' + (p.price_usd ? 'Get ' + name : 'Get an API key') + '</a>' +
+          '</div>';
+        }).join('');
+      }).catch(function () {
+        document.getElementById('apiGrid').innerHTML = '<div class="api-card"><div class="plan-name">Could not load API plans</div><a href="/developers/" class="plan-cta">View on /developers →</a></div>';
+      });
+    })();
+  </script>
+
+  <div class="faq-section">
+    <h2>Pricing questions</h2>
+    <details>
+      <summary>Can I change plans later?</summary>
+      <p>Yes — upgrade, downgrade, or cancel anytime from your account. Changes apply immediately.</p>
+    </details>
+    <details>
+      <summary>What happens if I hit my monthly limit?</summary>
+      <p>You'll be prompted to upgrade to keep generating. Your existing saved listings and history are never affected.</p>
+    </details>
+    <details>
+      <summary>Do you support local payment methods?</summary>
+      <p>Yes — checkout works globally, not just with US-based cards.</p>
+    </details>
+    <details>
+      <summary>Is the Free plan really free forever?</summary>
+      <p>Yes, no credit card required and no trial expiration — 5 listings a month, for as long as you want.</p>
+    </details>
+  </div>
+
+  <div class="cta-band">
+    <h2>Ready to write your first listing?</h2>
+    <p>Start free — no credit card required.</p>
+    <a href="/">Try Express Briefs free →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    &copy; 2026 Express Briefs · <a href="/">Home</a> · <a href="/listings/">Guides</a> · <a href="/legal/">Privacy &amp; Terms</a>
+  </div>
+</footer>
+<div class="cookie-banner" id="cookieBanner">
+  <p>We use essential local storage to keep you signed in — that's always on and never optional. We'd also like to use <strong>Google Analytics</strong> to understand how people use Express Briefs and improve it. See our <a href="/legal/">Cookie Policy</a> for details.</p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-banner-dismiss" onclick="setCookieConsent(false)">Necessary only</button>
+    <button class="cookie-banner-accept" onclick="setCookieConsent(true)">Accept analytics</button>
+  </div>
+</div>
+<script src="/assets/analytics.js" defer></script>
+</body>
+</html>
