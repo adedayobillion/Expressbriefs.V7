@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Express Briefs — Package Marketing in Minutes</title>
+<meta name="description" content="Turn one package into ready-to-post copy for every platform, in seconds. Built for photographers, caterers, decorators and planners.">
+<meta name="keywords" content="AI wedding marketing tool, wedding vendor copywriter, photography package generator, event vendor social media, planner marketing generator, platform-ready captions, multi-platform marketing copy, wedding vendors social media copy">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://expressbriefs.com/wedding-vendors/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="author" content="Express Briefs">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Express Briefs — Package Marketing in Minutes">
+<meta property="og:description" content="Turn one package into ready-to-post copy for every platform, in seconds. Built for photographers, caterers, decorators and planners.">
+<meta property="og:site_name" content="Express Briefs">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Express Briefs — Package Marketing in Minutes">
+<meta name="twitter:description" content="Turn one package into ready-to-post copy for every platform, in seconds. Built for photographers, caterers, decorators and planners.">
+
+<!-- ══════════ GOOGLE TAG MANAGER (consent-gated) ══════════
+     Container GTM-5G3NRJWM is NOT loaded until the visitor accepts analytics
+     cookies in the cookie banner — see loadGA()/trackEvent() further down this file. -->
+<script>
+  window.GTM_ID = 'GTM-5G3NRJWM';
+  window.dataLayer = window.dataLayer || [];
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Express Briefs",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "AI-powered property listing generator for real estate agents worldwide. Creates professional listings for WhatsApp, Instagram, TikTok, Snapchat, Facebook, Twitter, LinkedIn, Reddit and Quora in seconds.",
+  "offers": [
+    {"@type":"Offer","name":"Free","price":"0","priceCurrency":"USD"},
+    {"@type":"Offer","name":"Starter","price":"5","priceCurrency":"USD"},
+    {"@type":"Offer","name":"Pro","price":"12","priceCurrency":"USD"},
+    {"@type":"Offer","name":"Agency","price":"25","priceCurrency":"USD"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Do I own the listings it generates?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every listing Express Briefs generates for you is yours to use commercially, with no attribution or licensing required. Since it's AI-generated, we recommend a quick read-through for accuracy before you publish."}},
+    {"@type":"Question","name":"Does it work outside the US?","acceptedAnswer":{"@type":"Answer","text":"Yes — Express Briefs is built for a global audience, with pricing and payment options that work internationally, not just for US-based agents."}},
+    {"@type":"Question","name":"Which platforms can it write for?","acceptedAnswer":{"@type":"Answer","text":"WhatsApp, Instagram, Facebook, Twitter/X, LinkedIn, TikTok, Snapchat, Reddit, and Quora — plus a full standalone property listing description, generated together in one click."}},
+    {"@type":"Question","name":"Is there a free plan?","acceptedAnswer":{"@type":"Answer","text":"Yes — the Free plan includes 5 listings a month at no cost, so you can try it before upgrading."}},
+    {"@type":"Question","name":"Can I cancel anytime?","acceptedAnswer":{"@type":"Answer","text":"Yes, all paid plans are month-to-month with no lock-in — upgrade, downgrade, or cancel whenever you need to."}}
+  ]
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<!-- ══════════ ICON DEFINITIONS (inline SVG sprites) ══════════ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <!-- Express Briefs Logo Mark: folded brief with a speed bolt -->
+    <symbol id="icon-logo" viewBox="0 0 24 24" fill="none">
+      <path d="M5 3a1 1 0 0 1 1-1h7l6 6v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3z" fill="currentColor" opacity="0.92"/>
+      <path d="M13 2v5a1 1 0 0 0 1 1h5" fill="white" opacity="0.22"/>
+      <path d="M7.5 13.2h4.2M7.5 16h6.2" stroke="white" stroke-width="1.3" stroke-linecap="round" opacity="0.5"/>
+      <path d="M16.6 6.2l-3.4 5.6h2.1l-1.5 4.6 5-6.4h-2.4l1.7-3.8z" fill="white"/>
+    </symbol>
+
+    <!-- Compose / Pen -->
+    <symbol id="icon-compose" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13.5 3.5a2 2 0 0 1 2.83 2.83L6 16.6 2 18l1.4-4L13.5 3.5z"/>
+    </symbol>
+
+    <!-- Templates / Grid -->
+    <symbol id="icon-templates" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="7" height="7" rx="1.5"/>
+      <rect x="11" y="2" width="7" height="7" rx="1.5"/>
+      <rect x="2" y="11" width="7" height="7" rx="1.5"/>
+      <rect x="11" y="11" width="7" height="7" rx="1.5"/>
+    </symbol>
+
+    <!-- History / Clock -->
+    <symbol id="icon-history" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="8"/>
+      <path d="M10 6v4l2.5 2.5"/>
+    </symbol>
+
+    <!-- Admin / Shield -->
+    <symbol id="icon-admin" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 2L3 5.5v5C3 14.5 6 17.5 10 19c4-1.5 7-4.5 7-8.5v-5L10 2z"/>
+      <path d="M7 10l2 2 4-4"/>
+    </symbol>
+
+    <!-- Property house -->
+    <symbol id="icon-property" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 9L10 2l8 7"/>
+      <path d="M4 8v9a1 1 0 0 0 1 1h3v-5h4v5h3a1 1 0 0 0 1-1V8"/>
+    </symbol>
+
+    <!-- Generate / Sparkle -->
+    <symbol id="icon-generate" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 2l1.8 5.2L17 9l-5.2 1.8L10 16l-1.8-5.2L3 9l5.2-1.8L10 2z"/>
+      <path d="M16 1l.9 2.1L19 4l-2.1.9L16 7l-.9-2.1L13 4l2.1-.9L16 1z" opacity="0.5"/>
+    </symbol>
+
+    <!-- Copy -->
+    <symbol id="icon-copy" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="7" y="7" width="10" height="10" rx="2"/>
+      <path d="M13 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+    </symbol>
+
+    <!-- Redo / Refresh -->
+    <symbol id="icon-redo" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14.5 3.5A7 7 0 1 1 5.5 6.5"/>
+      <path d="M14.5 1v3.5H11"/>
+    </symbol>
+
+    <!-- Upgrade / Arrow up -->
+    <symbol id="icon-upgrade" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 15V5M5 10l5-5 5 5"/>
+      <path d="M5 17h10" stroke-width="1.5"/>
+    </symbol>
+
+    <!-- Signout -->
+    <symbol id="icon-signout" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 4h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4"/>
+      <path d="M8 14l4-4-4-4M3 10h9"/>
+    </symbol>
+
+    <!-- WhatsApp -->
+    <symbol id="icon-wa" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 1.5A8.5 8.5 0 0 0 2.5 10c0 1.5.4 2.9 1.1 4.1L2.5 18.5l4.5-1.1A8.5 8.5 0 1 0 10 1.5zM7.5 12.8c-.2-.1-1.3-.6-1.5-.7-.2-.1-.3-.1-.5.1-.1.2-.5.7-.6.8-.1.1-.2.1-.4 0-.2-.1-.9-.3-1.7-1-.6-.5-1-1.2-1.1-1.4-.1-.2 0-.3.1-.4l.3-.4c.1-.1.1-.2.2-.3.1-.1 0-.2 0-.3-.1-.1-.5-1.2-.7-1.6-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.2 1.7 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.4-.3z"/>
+    </symbol>
+
+    <!-- Instagram -->
+    <symbol id="icon-ig" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2.5" y="2.5" width="15" height="15" rx="4"/>
+      <circle cx="10" cy="10" r="3.5"/>
+      <circle cx="14.5" cy="5.5" r="0.5" fill="currentColor"/>
+    </symbol>
+
+    <!-- Facebook -->
+    <symbol id="icon-fb" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M18 10A8 8 0 1 0 10 18v-5.6H8V10h2V8.2C10 6.3 11.1 5 13.1 5c.9 0 1.9.1 1.9.1v2h-1.1c-1 0-1.3.6-1.3 1.3V10h2.2l-.4 2.4H12.6V18A8 8 0 0 0 18 10z"/>
+    </symbol>
+
+    <!-- Twitter/X -->
+    <symbol id="icon-tw" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M15.3 2h2.4L11.5 8.9 18.5 18h-5.3l-4.4-5.7L3.4 18H1l6.6-7.5L1 2h5.4l4 5.2L15.3 2zM14.5 16.5h1.3L5.9 3.3H4.5l10 13.2z"/>
+    </symbol>
+
+    <!-- LinkedIn -->
+    <symbol id="icon-ln" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M4.5 7H2v11h2.5V7zM3.25 5.8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM18 12.2c0-2.7-1.4-5.2-4.5-5.2-1.3 0-2.4.6-3 1.5V7H8v11h2.5v-5.9c0-1.6.8-2.5 2.1-2.5 1.2 0 1.9.8 1.9 2.4V18H18v-5.8z"/>
+    </symbol>
+
+    <!-- TikTok -->
+    <symbol id="icon-tk" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M13.5 2h-2.3v10.6a2.3 2.3 0 1 1-1.6-2.2V8.1a4.7 4.7 0 1 0 4 4.6V7.3c.8.6 1.8 1 2.9 1V6a2.9 2.9 0 0 1-2-2.1c-.1-.6-.9-1.9-1-1.9z"/>
+    </symbol>
+
+    <!-- Reddit -->
+    <symbol id="icon-rd" viewBox="0 0 20 20" fill="currentColor">
+      <circle cx="10" cy="11.2" r="6.3"/>
+      <circle cx="10" cy="11.2" r="5.3" fill="#fff"/>
+      <circle cx="7.2" cy="11.6" r="1" fill="currentColor"/>
+      <circle cx="12.8" cy="11.6" r="1" fill="currentColor"/>
+      <path d="M7 14c.8.6 1.9.9 3 .9s2.2-.3 3-.9" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <path d="M10 6.5l.6-2.3 2 .4" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <circle cx="13" cy="4.2" r="1" fill="currentColor"/>
+      <circle cx="16.3" cy="8.5" r="1.3" fill="currentColor"/>
+      <circle cx="3.7" cy="8.5" r="1.3" fill="currentColor"/>
+    </symbol>
+
+    <!-- Quora -->
+    <symbol id="icon-qa" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
+      <circle cx="10" cy="10" r="7"/>
+      <path d="M12.6 12.6c.5-.8.8-1.7.8-2.6a3.4 3.4 0 1 0-3.4 3.4c.5 0 1-.1 1.4-.3" stroke-linecap="round"/>
+      <path d="M12 12l2.3 2.3" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- Snapchat -->
+    <symbol id="icon-sc" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 2.5c1.8 0 3 1.4 3.1 3.2l.1 1.7c0 .3.2.4.5.5.4.1.9-.2 1.2-.2.3 0 .7.1.7.5 0 .3-.3.5-.7.7-.2.1-.5.2-.5.4 0 .1.1.4.3.8.5 1 1.4 1.6 2.4 1.9.2.1.4.2.4.4 0 .4-.7.6-1.3.7-.2 0-.3.1-.4.4-.1.2-.1.5-.3.6-.2.1-.5.1-.9.1-.5 0-1 0-1.4.3-.4.3-.7.7-1.3 1-.6.3-1.3.5-2.1.5s-1.5-.2-2.1-.5c-.6-.3-.9-.7-1.3-1-.4-.3-.9-.3-1.4-.3-.4 0-.7 0-.9-.1-.2-.1-.2-.4-.3-.6-.1-.3-.2-.4-.4-.4-.6-.1-1.3-.3-1.3-.7 0-.2.2-.3.4-.4 1-.3 1.9-.9 2.4-1.9.2-.4.3-.7.3-.8 0-.2-.3-.3-.5-.4-.4-.2-.7-.4-.7-.7 0-.4.4-.5.7-.5.3 0 .8.3 1.2.2.3-.1.5-.2.5-.5l.1-1.7C7 3.9 8.2 2.5 10 2.5z"/>
+    </symbol>
+
+    <!-- Upload -->
+    <symbol id="icon-upload" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 13V5M6 8l4-4 4 4"/>
+      <path d="M3 15v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1"/>
+    </symbol>
+
+    <!-- Checkmark (small) -->
+    <symbol id="icon-check" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 6l3 3 5-5"/>
+    </symbol>
+
+    <!-- Delete / trash -->
+    <symbol id="icon-trash" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 5h14M8 5V3h4v2M6 5v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V5"/>
+    </symbol>
+
+    <!-- Plus -->
+    <symbol id="icon-plus" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M10 4v12M4 10h12"/>
+    </symbol>
+
+    <!-- Refresh -->
+    <symbol id="icon-refresh" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 10A6 6 0 0 1 15.5 6.5"/>
+      <path d="M16 10A6 6 0 0 1 4.5 13.5"/>
+      <path d="M15.5 4v3.5H12"/>
+      <path d="M4.5 16v-3.5H8"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ══════════ AUTH SCREEN ══════════ -->
+<div class="screen" id="authScreen" role="main">
+
+  <!-- Left: Brand Panel -->
+  <div class="auth-left">
+    <a href="/" class="auth-brand" aria-label="Express Briefs home">
+      <div class="logo-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <use href="#icon-logo"/>
+        </svg>
+      </div>
+      <div class="logo-wordmark">
+        <span class="logo-name">Express Briefs</span>
+        <span class="logo-sub">Global</span>
+      </div>
+    </a>
+
+    <div class="auth-hero">
+      <div class="auth-eyebrow">
+        <div class="auth-eyebrow-dot"></div>
+        <span id="heroPill">Create once. Market everywhere.</span>
+      </div>
+      <h1 id="heroH1">Turn one <em>package</em><br>brief into platform-ready copy</h1>
+      <p id="heroSub">Paste the details once. Express Briefs writes channel-ready captions and descriptions for photographers, caterers, decorators and planners in seconds.</p>
+    </div>
+
+    <div class="auth-features">
+      <div class="auth-feature">
+        <div class="auth-feature-icon">
+          <svg width="15" height="15" color="#7ec8a0"><use href="#icon-generate"/></svg>
+        </div>
+        <div class="auth-feature-text">
+          <strong>AI writes in under 5 seconds</strong>
+          <span>Powered by powerful AI models</span>
+        </div>
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon">
+          <svg width="15" height="15" color="#7ec8a0"><use href="#icon-compose"/></svg>
+        </div>
+        <div class="auth-feature-text">
+          <strong>9 platforms at once, Headlines/Titles, Briefs and Descriptions</strong>
+          <span>WhatsApp, Instagram, TikTok, Snapchat, Facebook, Twitter, LinkedIn, Reddit, Quora</span>
+        </div>
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon">
+          <svg width="15" height="15" color="#7ec8a0"><use href="#icon-property"/></svg>
+        </div>
+        <div class="auth-feature-text">
+          <strong id="heroFeature3Title">Works for any package, anywhere</strong>
+          <span id="heroFeature3Sub">Adapts tone, format and call-to-action to each platform</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Right: Form Panel -->
+  <div class="auth-right" id="authRight">
+    <div class="auth-intro" id="authIntro">
+      <h2>Ready to write your first listing?</h2>
+      <p class="sub">Free to start — no credit card required.</p>
+      <button class="btn-auth" onclick="showAuthForm('register')">
+        Get Started Free <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M3 10h14M10 3l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="auth-intro-signin" onclick="showAuthForm('login')">Already have an account? <strong>Sign In</strong></button>
+
+      <p class="auth-plans-title">Simple Global Pricing</p>
+      <div class="auth-plans">
+        <div class="aplan"><div class="aplan-name">Free</div><div class="aplan-price">$0</div><div class="aplan-lim">5 listings/mo</div></div>
+        <div class="aplan hot"><div class="aplan-name">Starter</div><div class="aplan-price">$5</div><div class="aplan-lim">50 listings/mo</div></div>
+        <div class="aplan hot"><div class="aplan-name">Pro</div><div class="aplan-price">$12</div><div class="aplan-lim">200 listings/mo</div></div>
+        <div class="aplan"><div class="aplan-name">Agency</div><div class="aplan-price">$25</div><div class="aplan-lim">999 listings/mo</div></div>
+      </div>
+    </div>
+
+    <div class="auth-form-wrap hidden" id="authFormWrap">
+      <button type="button" class="back-to-login" onclick="hideAuthForm()">← Back</button>
+      <h2 id="authHeading">Get Started Free</h2>
+      <p class="sub" id="authSub">Create your account in 30 seconds</p>
+
+      <div class="auth-tabs" id="authTabs">
+        <button class="auth-tab" onclick="switchTab('login')">Sign In</button>
+        <button class="auth-tab active" onclick="switchTab('register')">Create Account</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="auth-form hidden" id="loginForm">
+        <div class="aerr" id="loginError"></div>
+        <div class="fg">
+          <label class="fl">Email Address</label>
+          <input class="fi" type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="fg">
+          <label class="fl">Password</label>
+          <div class="pw-wrap">
+            <input class="fi" type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+            <button type="button" class="pw-eye" onclick="togglePw('loginPassword',this)" aria-label="Show password">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>
+            </button>
+          </div>
+          <button type="button" class="forgot-link" onclick="showForgot()">Forgot password?</button>
+        </div>
+        <button class="btn-auth" onclick="login()" id="loginBtn">
+          Sign In <svg width="16" height="16" color="currentColor"><use href="#icon-signout"/></svg>
+        </button>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="auth-form" id="registerForm">
+        <div class="aerr" id="registerError"></div>
+        <div class="fg">
+          <label class="fl">Full Name</label>
+          <input class="fi" type="text" id="regName" placeholder="e.g. John Smith" autocomplete="name">
+        </div>
+        <div class="fg">
+          <label class="fl">Email Address</label>
+          <input class="fi" type="email" id="regEmail" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="fg">
+          <label class="fl">Password</label>
+          <div class="pw-wrap">
+            <input class="fi" type="password" id="regPassword" placeholder="Min 8 characters" autocomplete="new-password" onkeydown="if(event.key==='Enter')register()">
+            <button type="button" class="pw-eye" onclick="togglePw('regPassword',this)" aria-label="Show password">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>
+            </button>
+          </div>
+        </div>
+        <button class="btn-auth" onclick="register()" id="registerBtn">
+          Create Free Account <svg width="16" height="16" color="currentColor"><use href="#icon-signout"/></svg>
+        </button>
+      </div>
+
+      <!-- FORGOT PASSWORD -->
+      <div class="auth-form hidden" id="forgotForm">
+        <button type="button" class="back-to-login" onclick="hideForgot()">← Back to Sign In</button>
+        <div class="aerr" id="forgotError"></div>
+        <div class="aerr" id="forgotSuccess" style="background:rgba(46,122,82,0.08);border-color:rgba(46,122,82,0.2);color:var(--sage)"></div>
+        <p style="font-size:13px;color:var(--muted);margin-top:2px">Enter your email and we'll send a reset link. Expires in 1 hour.</p>
+        <div class="fg">
+          <label class="fl">Email Address</label>
+          <input class="fi" type="email" id="forgotEmail" placeholder="you@email.com" onkeydown="if(event.key==='Enter')forgotPassword()">
+        </div>
+        <button class="btn-auth" onclick="forgotPassword()" id="forgotBtn">
+          Send Reset Link <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M3 10h14M10 3l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- RESET PASSWORD (shown via ?reset_token= URL param) -->
+      <div class="auth-form hidden" id="resetForm">
+        <div class="aerr" id="resetError"></div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:4px">Enter your new password below.</p>
+        <div class="fg">
+          <label class="fl">New Password</label>
+          <div class="pw-wrap">
+            <input class="fi" type="password" id="resetPassword" placeholder="Min 8 characters" autocomplete="new-password">
+            <button type="button" class="pw-eye" onclick="togglePw('resetPassword',this)" aria-label="Show password">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">Confirm New Password</label>
+          <div class="pw-wrap">
+            <input class="fi" type="password" id="resetConfirm" placeholder="Repeat new password" autocomplete="new-password" onkeydown="if(event.key==='Enter')doResetPassword()">
+            <button type="button" class="pw-eye" onclick="togglePw('resetConfirm',this)" aria-label="Show password">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>
+            </button>
+          </div>
+        </div>
+        <button class="btn-auth" onclick="doResetPassword()" id="resetBtn">
+          Set New Password <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M3 10h14M10 3l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SEE IT IN ACTION ══════════ -->
+  <div class="mkt-section" style="grid-column:1/-1">
+    <div class="mkt-inner">
+      <p class="mkt-eyebrow">See it in action</p>
+      <h2 class="mkt-h2" id="actionH2">Same package. Nine different platforms.</h2>
+      <p class="mkt-sub">Enter the facts once — Express Briefs writes copy that fits how each platform actually gets read.</p>
+      <div class="mkt-example-grid">
+        <div class="mkt-fact-card">
+          <p class="mkt-fact-label">The facts you enter</p>
+          <ul class="mkt-fact-list" id="actionFacts"><li>Full-Day Wedding Photography</li><li>Photography</li><li>custom packages</li><li>award-winning</li></ul>
+        </div>
+        <div class="mkt-out-card">
+          <p class="mkt-out-label"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#icon-wa"/></svg> WhatsApp Message</p>
+          <p class="mkt-out-text" id="actionWA">📸 Full-Day Wedding Photography — Napa Valley<br>Award-winning | Payment plans available<br>$2,500 — booking Fall 2026, DM to consult!</p>
+        </div>
+        <div class="mkt-out-card">
+          <p class="mkt-out-label"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#icon-ig"/></svg> Instagram Caption</p>
+          <p class="mkt-out-text" id="actionIG">Every glance, every tear, every first dance ✨📸<br>Full-day wedding photography — Napa Valley<br>$2,500 • Payment plans available<br>Link in bio to book your consultation.<br>#NapaWeddings #WeddingPhotography</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ WHY EXPRESS BRIEFS ══════════ -->
+  <div class="mkt-section mkt-alt" style="grid-column:1/-1">
+    <div class="mkt-inner">
+      <p class="mkt-eyebrow" id="whyEyebrow">Why photographers choose Express Briefs</p>
+      <h2 class="mkt-h2">Built for how listings actually get shared</h2>
+      <div class="mkt-why-grid">
+        <div class="mkt-why-card">
+          <p class="mkt-why-t">WhatsApp-first, not an afterthought</p>
+          <p class="mkt-why-d">Most listing tools are built around MLS/Zillow. We started with WhatsApp — where most of the world actually closes deals.</p>
+        </div>
+        <div class="mkt-why-card">
+          <p class="mkt-why-t">Local pricing, local payment</p>
+          <p class="mkt-why-d">Pay the way that works where you are — no forcing every agent onto a US-only checkout.</p>
+        </div>
+        <div class="mkt-why-card">
+          <p class="mkt-why-t">You own everything it writes</p>
+          <p class="mkt-why-d">No licensing catch. Every listing you generate is yours to use commercially, immediately.</p>
+        </div>
+      </div>
+      <!-- TODO(owner): replace with real customer quotes once you have your first few — do not publish placeholder/fake testimonials as real. -->
+      <div class="mkt-quote-placeholder">
+        <p>REVIEWS ARE COMING SOON</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FAQ ══════════ -->
+  <div class="mkt-section" style="grid-column:1/-1">
+    <div class="mkt-inner mkt-inner-narrow">
+      <p class="mkt-eyebrow">Questions</p>
+      <h2 class="mkt-h2">Frequently asked</h2>
+      <div class="mkt-faq-list">
+        <details class="mkt-faq-item">
+          <summary>Do I own the listings it generates?</summary>
+          <p>Yes. Every listing Express Briefs generates for you is yours to use commercially, with no attribution or licensing required. Since it's AI-generated, we recommend a quick read-through for accuracy before you publish.</p>
+        </details>
+        <details class="mkt-faq-item">
+          <summary>Does it work outside the US?</summary>
+          <p>Yes — Express Briefs is built for a global audience, with pricing and payment options that work internationally, not just for US-based agents.</p>
+        </details>
+        <details class="mkt-faq-item">
+          <summary>Which platforms can it write for?</summary>
+          <p id="faqPlatforms">WhatsApp, Instagram, Facebook, Twitter/X, LinkedIn, TikTok, Snapchat, Reddit, and Quora — plus a full standalone package description, generated together in one click.</p>
+        </details>
+        <details class="mkt-faq-item">
+          <summary>Is there a free plan?</summary>
+          <p>Yes — the Free plan includes 5 listings a month at no cost, so you can try it before upgrading.</p>
+        </details>
+        <details class="mkt-faq-item">
+          <summary>Can I cancel anytime?</summary>
+          <p>Yes, all paid plans are month-to-month with no lock-in — upgrade, downgrade, or cancel whenever you need to.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FINAL CTA ══════════ -->
+  <div class="mkt-section mkt-alt mkt-final-cta" style="grid-column:1/-1">
+    <div class="mkt-inner" style="text-align:center">
+      <h2 class="mkt-h2">Write your first listing in the next 30 seconds</h2>
+      <p class="mkt-sub" style="margin-left:auto;margin-right:auto">Free to start, no credit card required.</p>
+      <button type="button" class="cta" onclick="showAuthForm('register');document.getElementById('authRight').scrollIntoView({behavior:'smooth'})">Create your free account →</button>
+    </div>
+  </div>
+
+  <div class="site-footer app-footer" style="grid-column:1/-1">
+    <span>&copy; 2026 Express Briefs</span>
+    <span class="fdot">&middot;</span>
+    <a href="/wedding-vendors/listings/" id="guidesLink1" class="footer-link" style="text-decoration:none">Guides</a>
+    <span class="fdot">&middot;</span>
+    <a href="/pricing/" id="pricingLink1" class="footer-link" style="text-decoration:none">Pricing</a>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openLegal('privacy')">Privacy Policy</button>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openLegal('terms')">Terms of Service</button>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openLegal('cookies')">Cookie Policy</button>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openCookieSettings()">Cookie Settings</button>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openLegal('support')">Support</button>
+  </div>
+</div>
+
+<!-- ══════════ APP SCREEN ══════════ -->
+<div class="screen" id="appScreen" role="main">
+
+  <!-- Navigation -->
+  <nav class="app-nav">
+    <a href="/" class="nav-brand" aria-label="Express Briefs home">
+      <div class="nav-logo-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+          <use href="#icon-logo"/>
+        </svg>
+      </div>
+      <span class="nav-logo-name">Express Briefs</span>
+    </a>
+
+    <div class="nav-center">
+      <button class="ntab active" onclick="showPage('compose')" id="tab-compose">
+        Compose
+      </button>
+      <button class="ntab" onclick="showPage('saved')" id="tab-saved">
+        Saved
+      </button>
+      <button class="ntab" onclick="showPage('history')" id="tab-history">
+        History
+      </button>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-usage">
+        <div class="nav-usage-bar"><div class="nav-usage-fill" id="usageFill" style="width:0%"></div></div>
+        <span class="nav-usage-txt" id="usageText">0/5</span>
+      </div>
+      <button class="btn-upgrade" onclick="openUpgrade()" id="upgradeBtn">
+        <svg width="13" height="13" color="var(--ink)"><use href="#icon-upgrade"/></svg>
+        Upgrade
+      </button>
+      <div class="nav-user">
+        <div class="nav-avatar" id="userAvatar">B</div>
+        <span class="nav-name" id="userName">User</span>
+      </div>
+      <button class="btn-signout" onclick="logout()">
+        Sign out
+      </button>
+    </div>
+  </nav>
+
+  <!-- Email verification banner -->
+  <div class="verify-banner" id="verifyBanner">
+    <span>📧 Please verify your email address to keep full access.</span>
+    <button onclick="resendVerification()">Resend Email</button>
+  </div>
+  <!-- Payment result banner -->
+  <div class="verify-banner" id="paymentBanner" style="display:none"></div>
+
+  <!-- ── COMPOSE PAGE ── -->
+  <div class="app-page active" id="page-compose">
+
+    <div class="page-hero">
+        <div class="hero-pill">
+          <div style="width:5px;height:5px;border-radius:50%;background:var(--lime);box-shadow:0 0 6px var(--lime)"></div>
+          <span id="composePill">Create once. Market everywhere.</span>
+        </div>
+        <h2 id="composeH2">Turn one brief into<br><em>platform-ready copy</em> instantly</h2>
+        <p id="composeSub">Write the brief once, then reuse it everywhere with copy that matches how each platform is read.</p>
+    </div>
+
+    <div class="compose-body">
+
+      <!-- Input Card -->
+      <div class="input-card">
+        <div class="ic-header">
+          <div class="ic-header-icon">
+            <svg width="16" height="16" color="var(--mint)"><use href="#icon-property"/></svg>
+          </div>
+          <div>
+            <h3 id="icTitle">Property Details</h3>
+            <p id="icSub">Fill in to generate your listings</p>
+          </div>
+        </div>
+
+        <div class="ic-body">
+
+          <!-- Dynamic fields render here, driven by /api/industries/:slug -->
+          <div id="dynFields"></div>
+
+          <div class="field">
+            <label class="field-label">Key Features</label>
+            <div class="feat-grid" id="featGrid"></div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Extra Details</label>
+            <textarea class="f-textarea" id="extraDetails" placeholder="Any other details worth mentioning..."></textarea>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Writing Tone</label>
+            <div class="tone-grid" id="toneGrid"></div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Platforms</label>
+            <div class="plat-row">
+              <label class="plat pt-wa on" onclick="tPlat(this)">
+                <input type="checkbox" checked>
+                <svg width="13" height="13"><use href="#icon-wa"/></svg>
+                WhatsApp
+              </label>
+              <label class="plat pt-ig on" onclick="tPlat(this)">
+                <input type="checkbox" checked>
+                <svg width="13" height="13"><use href="#icon-ig"/></svg>
+                Instagram
+              </label>
+              <label class="plat pt-fb on" onclick="tPlat(this)">
+                <input type="checkbox" checked>
+                <svg width="13" height="13"><use href="#icon-fb"/></svg>
+                Facebook
+              </label>
+              <label class="plat pt-tw" onclick="tPlat(this)">
+                <input type="checkbox">
+                <svg width="13" height="13"><use href="#icon-tw"/></svg>
+                Twitter
+              </label>
+              <label class="plat pt-ln" onclick="tPlat(this)">
+                <input type="checkbox">
+                <svg width="13" height="13"><use href="#icon-ln"/></svg>
+                LinkedIn
+              </label>
+              <label class="plat pt-tk" onclick="tPlat(this)">
+                <input type="checkbox">
+                <svg width="13" height="13"><use href="#icon-tk"/></svg>
+                TikTok
+              </label>
+              <label class="plat pt-sc" onclick="tPlat(this)">
+                <input type="checkbox">
+                <svg width="13" height="13"><use href="#icon-sc"/></svg>
+                Snapchat
+              </label>
+              <label class="plat pt-rd" onclick="tPlat(this)">
+                <input type="checkbox">
+                <svg width="13" height="13"><use href="#icon-rd"/></svg>
+                Reddit
+              </label>
+              <label class="plat pt-qa" onclick="tPlat(this)">
+                <input type="checkbox">
+                <svg width="13" height="13"><use href="#icon-qa"/></svg>
+                Quora
+              </label>
+            </div>
+          </div>
+
+          <button class="btn-generate" id="genBtn" onclick="generate()">
+            <div class="spin"></div>
+            <svg width="16" height="16" color="white" class="btxt-icon"><use href="#icon-generate"/></svg>
+            <span class="btxt">Generate Listings</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Output Area -->
+      <div class="output-area">
+        <div class="stats-bar" id="statsBar">
+          <div class="stat-card"><div class="stat-n" id="stot">0</div><div class="stat-l">Generated</div></div>
+          <div class="stat-card"><div class="stat-n" id="splat">0</div><div class="stat-l">Platforms</div></div>
+          <div class="stat-card"><div class="stat-n" id="stime">0m</div><div class="stat-l">Time Saved</div></div>
+          <div class="stat-card"><div class="stat-n" id="swords">0</div><div class="stat-l">Words</div></div>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">
+            <svg width="32" height="32" color="var(--leaf)"><use href="#icon-compose"/></svg>
+          </div>
+          <h3>Ready to Write for You</h3>
+          <p>Fill in your property details on the left and click Generate. Professional copy for every platform in under 10 seconds.</p>
+          <div class="steps">
+            <div class="step-item"><div class="step-n">1</div>Enter details</div>
+            <div class="step-item"><div class="step-n">2</div>Pick platforms</div>
+            <div class="step-item"><div class="step-n">3</div>Copy &amp; post</div>
+          </div>
+        </div>
+
+        <div id="resultsContainer"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SAVED OUTPUTS PAGE ── -->
+  <div class="app-page" id="page-saved">
+    <div class="page-hero">
+      <h2>Saved Listings</h2>
+      <p id="savedSub">Your saved package outputs — reload any time to copy or share</p>
+    </div>
+    <div class="page-body">
+      <div id="savedList"></div>
+    </div>
+  </div>
+
+  <!-- ── HISTORY PAGE ── -->
+  <div class="app-page" id="page-history">
+    <div class="page-hero">
+        <h2>Generation History</h2>
+        <p id="historySub">All your package campaigns</p>
+      </div>
+    <div class="page-body">
+      <div class="stats-row" id="histStats"></div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+        <button class="btn btn-danger" onclick="clearHist()">Clear History</button>
+      </div>
+      <div id="histList"></div>
+    </div>
+  </div>
+
+  <!-- ── ADMIN PAGE ── -->
+  <div class="app-page" id="page-admin">
+    <div class="page-hero">
+        <h2>Admin Dashboard</h2>
+        <p>Manage users and subscriptions</p>
+      </div>
+    <div class="page-body">
+      <div class="stats-row" id="adminStats"></div>
+      <div class="admin-table-wrap">
+        <div class="admin-table-head">
+          <h3>All Users</h3>
+          <button class="btn btn-ghost btn-sm" onclick="loadAdmin()">
+            <svg width="13" height="13" color="currentColor"><use href="#icon-refresh"/></svg>
+            Refresh
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name &amp; Email</th>
+              <th>Plan</th>
+              <th>Generations</th>
+              <th>Joined</th>
+              <th>Last Active</th>
+              <th>Change Plan</th>
+            </tr>
+          </thead>
+          <tbody id="adminBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer app-footer">
+    <span>&copy; 2026 Express Briefs</span>
+    <span class="fdot">&middot;</span>
+    <a href="/wedding-vendors/listings/" id="guidesLink2" class="footer-link" style="text-decoration:none">Guides</a>
+        <span class="fdot">&middot;</span>
+        <a href="/pricing/" id="pricingLink2" class="footer-link" style="text-decoration:none">Pricing</a>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openLegal('privacy')">Privacy Policy</button>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openLegal('terms')">Terms of Service</button>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openLegal('cookies')">Cookie Policy</button>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openCookieSettings()">Cookie Settings</button>
+    <span class="fdot">&middot;</span>
+    <button type="button" class="footer-link" onclick="openLegal('support')">Support</button>
+  </div>
+
+</div>
+
+<!-- ══════════ UPGRADE MODAL ══════════ -->
+<div class="modal-overlay" id="upModal">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+      <div></div>
+      <button onclick="closeUp()" aria-label="Close" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1">&times;</button>
+    </div>
+    <h2>Upgrade Express Briefs</h2>
+    <p id="upgradeBody">You've reached your monthly limit. Upgrade to keep generating professional package content that wins more results — worldwide.</p>
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="pc-name">Starter</div>
+        <div class="pc-price">$5<span style="font-size:13px;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pc-limit">50 listings/month</div>
+        <div class="pc-desc">Perfect for independent agents listing 2–3 properties per week</div>
+        <button onclick="payWithBachs('starter')" style="margin-top:12px;width:100%;padding:9px;background:var(--ink);color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans)">Subscribe — $5/mo</button>
+      </div>
+      <div class="plan-card hot">
+        <div class="pc-name">Pro — Most Popular</div>
+        <div class="pc-price">$12<span style="font-size:13px;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pc-limit">200 listings/month</div>
+        <div class="pc-desc">Serious agents. Full platform coverage for every listing.</div>
+        <button onclick="payWithBachs('pro')" style="margin-top:12px;width:100%;padding:9px;background:var(--leaf);color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans)">Subscribe — $12/mo</button>
+      </div>
+      <div class="plan-card">
+        <div class="pc-name">Agency</div>
+        <div class="pc-price">$25<span style="font-size:13px;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pc-limit">999 listings/month</div>
+        <div class="pc-desc">Teams and large brokerages. Maximum volume, maximum reach.</div>
+        <button onclick="payWithBachs('agency')" style="margin-top:12px;width:100%;padding:9px;background:var(--ink);color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans)">Subscribe — $25/mo</button>
+      </div>
+    </div>
+    <div class="payment-loading" id="payLoading">Redirecting to secure payment...</div>
+    <p class="modal-note">Payments processed securely via Bachs. Your plan activates instantly after payment.</p>
+  </div>
+</div>
+
+<!-- ══════════ LEGAL / SUPPORT MODAL ══════════ -->
+<div class="modal-overlay" id="legalModal">
+  <div class="modal modal-legal">
+    <div class="modal-legal-head">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <h2 id="legalTitle">Privacy Policy</h2>
+          <div class="modal-legal-updated" id="legalUpdated">Last updated January 2026</div>
+        </div>
+        <button onclick="closeLegal()" aria-label="Close" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1">&times;</button>
+      </div>
+    </div>
+    <div class="modal-legal-body" id="legalBody"></div>
+  </div>
+</div>
+
+<!-- ══════════ COOKIE CONSENT BANNER ══════════ -->
+<div class="cookie-banner" id="cookieBanner">
+  <p>We use essential local storage to keep you signed in — that's always on and never optional. We'd also like to use <strong>Google Analytics</strong> to understand how people use Express Briefs and improve it. See our <a href="javascript:void(0)" onclick="openLegal('cookies')">Cookie Policy</a> for details.</p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-banner-dismiss" onclick="setCookieConsent(false)">Necessary only</button>
+    <button class="cookie-banner-accept" onclick="setCookieConsent(true)">Accept analytics</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>window.INDUSTRY_SLUG = "wedding-vendors";</script>
+<script src="/assets/legal-content.js"></script>
+<script src="/assets/app.js"></script>
+</body>
+</html>
