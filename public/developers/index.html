@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Express Briefs API — generate captions from your own app</title>
+<meta name="description" content="Add AI caption and listing generation to your own website or app. One request returns ready-to-post copy for Instagram, WhatsApp, TikTok, Facebook, LinkedIn and more.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #322E25; --ink2: #443F32; --ink3: #232f2b;
+    --sage: #1E3B2C; --leaf: #2E7A52; --mint: #7ec8a0; --lime: #C99A3D;
+    --paper: #f6f3ee; --paper2: #ede9e1; --white: #fff;
+    --muted: rgba(50,46,37,.66); --border: rgba(50,46,37,.12);
+    --danger: #a23a2a;
+    --serif: "Archivo", sans-serif;
+    --sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--sage); text-underline-offset: 3px; }
+  a:hover { color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--leaf); outline-offset: 2px; border-radius: 4px; }
+  code { font: 500 .88em var(--mono); background: var(--paper2); padding: .12em .4em; border-radius: 5px; }
+
+  /* top bar */
+  .bar { position: sticky; top: 0; z-index: 20; background: rgba(246,243,238,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  .bar-in { max-width: 1180px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 24px; }
+  .brand { white-space: nowrap; font-family: var(--serif); font-weight: 800; font-size: 18px; letter-spacing: -.02em; color: var(--ink); text-decoration: none; }
+  .brand span { color: var(--sage); font-weight: 600; }
+  .bar nav { margin-left: auto; display: flex; gap: 22px; font-size: 14px; font-weight: 600; }
+  .bar nav a { color: var(--ink); text-decoration: none; white-space: nowrap; }
+  .bar nav a:hover { color: var(--sage); }
+
+  /* hero */
+  .hero { max-width: 1180px; margin: 0 auto; padding: 64px 24px 56px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(32px, 4.6vw, 54px); line-height: 1.06; letter-spacing: -.035em; font-weight: 900; margin: 0 0 20px; }
+  .hero p { font-size: 18px; color: var(--muted); max-width: 30em; margin: 0 0 28px; }
+  .btn { display: inline-block; font: 700 15px var(--sans); background: var(--ink); color: var(--paper); border: 0; padding: 13px 22px; border-radius: 10px; cursor: pointer; text-decoration: none; }
+  .btn:hover { background: var(--sage); color: #fff; }
+  .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); margin-left: 10px; }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); }
+  .btn.small { padding: 8px 14px; font-size: 13px; border-radius: 8px; }
+  .btn.danger { background: transparent; color: var(--danger); box-shadow: inset 0 0 0 1.5px var(--danger); }
+  .btn.danger:hover { background: var(--danger); color: #fff; }
+
+  /* code panels */
+  .code { background: var(--ink); color: #e9efe9; border-radius: 14px; overflow: hidden; box-shadow: 0 18px 50px rgba(50,46,37,.22); }
+  .code-tabs { display: flex; gap: 2px; padding: 10px 12px 0; background: var(--ink2); border-bottom: 1px solid rgba(255,255,255,.08); }
+  .code-tabs button { font: 600 13px var(--sans); color: rgba(233,239,233,.55); background: none; border: 0; padding: 9px 14px; border-radius: 8px 8px 0 0; cursor: pointer; }
+  .code-tabs button[aria-selected="true"] { color: var(--ink); background: var(--lime); }
+  .code-tabs .copy { margin-left: auto; color: var(--mint); }
+  .code-tabs .copy:hover { color: #fff; }
+  pre { margin: 0; padding: 20px 22px; overflow-x: auto; font: 400 13.5px/1.7 var(--mono); tab-size: 2; }
+  pre.plain { background: var(--ink); color: #e9efe9; border-radius: 12px; }
+  .hero .code pre { max-height: 430px; }
+  .resp-label { padding: 10px 22px; background: var(--ink2); color: var(--mint); font: 600 13px var(--sans); border-top: 1px solid rgba(255,255,255,.08); }
+
+  /* layout */
+  .layout { max-width: 1180px; margin: 0 auto; padding: 0 24px 96px; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 56px; }
+  .side { position: sticky; top: 92px; align-self: start; font-size: 14px; font-weight: 600; }
+  .side a { display: block; padding: 7px 0 7px 14px; color: var(--muted); text-decoration: none; border-left: 2px solid var(--border); }
+  .side a:hover, .side a.on { color: var(--ink); border-left-color: var(--leaf); }
+  main section { padding: 44px 0; border-top: 1px solid var(--border); }
+  main section:first-child { border-top: 0; padding-top: 8px; }
+  h2 { font-family: var(--serif); font-size: 27px; letter-spacing: -.025em; line-height: 1.2; margin: 0 0 14px; font-weight: 800; }
+  h3 { font-size: 17px; margin: 30px 0 8px; font-weight: 700; }
+  main p { max-width: 42em; margin: 0 0 14px; }
+  .lead { color: var(--muted); }
+  .verb { display: inline-block; font: 700 12.5px var(--mono); background: var(--lime); color: var(--ink); padding: 3px 9px; border-radius: 6px; margin-right: 10px; vertical-align: 2px; }
+  .verb.get { background: var(--mint); }
+  .path { font: 500 17px var(--mono); }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 10px 14px 10px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 700; color: var(--ink); padding-top: 4px; }
+  td:first-child { white-space: nowrap; }
+  td code { white-space: nowrap; }
+  .req { color: var(--sage); font-weight: 700; }
+  .tablewrap { overflow-x: auto; }
+
+  .note { background: var(--white); border-left: 4px solid var(--leaf); padding: 14px 18px; border-radius: 0 10px 10px 0; margin: 18px 0; max-width: 46em; }
+  .note strong { display: block; margin-bottom: 2px; }
+  .note.warn { border-left-color: #c58b1a; }
+
+  /* keys panel */
+  .keys { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+  .keys h3:first-child { margin-top: 0; }
+  .who { font-size: 14px; color: var(--muted); margin: 0 0 18px; }
+  .keyrow { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1.4fr) minmax(0,1fr) auto; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--border); font-size: 14px; }
+  .keyrow .kn { font-weight: 700; overflow-wrap: anywhere; }
+  .keyrow .kp { font: 500 13px var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+  .keyrow .km { color: var(--muted); font-size: 13px; }
+  .empty { padding: 18px 0; color: var(--muted); border-top: 1px solid var(--border); }
+  .create { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .create input, .field select { font: 500 15px var(--sans); padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--paper); color: var(--ink); min-width: 0; }
+  .create input { flex: 1 1 220px; }
+  .msg { margin: 12px 0 0; font-size: 14px; min-height: 1.4em; }
+  .msg.err { color: var(--danger); font-weight: 600; }
+  .newkey { background: var(--ink); color: #fff; border-radius: 12px; padding: 18px 20px; margin: 18px 0 4px; }
+  .newkey p { margin: 0 0 10px; color: var(--lime); font-weight: 600; font-size: 14px; max-width: none; }
+  .newkey .val { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .newkey code { flex: 1 1 260px; background: rgba(255,255,255,.08); color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 13px; overflow-wrap: anywhere; white-space: normal; }
+  .newkey .btn { background: var(--lime); color: var(--ink); }
+
+  /* plan meter + pricing */
+  .planbox { background: var(--paper); border-radius: 12px; padding: 16px 18px; margin: 0 0 18px; }
+  .planbox .top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 14px; }
+  .planbox .top b { font-weight: 700; }
+  .meter { height: 8px; background: var(--paper2); border-radius: 99px; overflow: hidden; margin: 10px 0 8px; }
+  .meter > i { display: block; height: 100%; background: var(--leaf); border-radius: 99px; }
+  .meter.hot > i { background: #c58b1a; }
+  .meter.full > i { background: var(--danger); }
+  .planbox .sub { font-size: 13px; color: var(--muted); margin: 0; max-width: none; }
+  .planbox .sub a { font-weight: 600; }
+  .banner { max-width: 1132px; margin: 18px auto 0; padding: 14px 18px; border-radius: 12px; font-weight: 600; font-size: 15px; background: rgba(46,122,82,.13); border: 1px solid rgba(46,122,82,.35); color: var(--ink); display: flex; gap: 12px; align-items: center; }
+  .banner.bad { background: rgba(162,58,42,.08); border-color: rgba(162,58,42,.3); color: var(--danger); }
+  .banner button { margin-left: auto; background: none; border: 0; font: 700 18px var(--sans); cursor: pointer; color: inherit; padding: 0 4px; }
+  .plans td, .plans th { padding-right: 18px; }
+  .plans tr.current td { background: rgba(181,232,83,.16); }
+  .plans .price { font-weight: 800; white-space: nowrap; }
+  .plans .tag { font-weight: 700; color: var(--sage); }
+  .plans td:last-child { text-align: right; padding-right: 0; white-space: nowrap; }
+
+  /* field explorer */
+  .field { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 12px 0 6px; }
+  .field label { font-weight: 700; font-size: 14px; }
+  .opts { color: var(--muted); font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 36px; padding-top: 40px; }
+    .layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .side { display: none; }
+    .keyrow { grid-template-columns: 1fr auto; }
+    .keyrow .kp, .keyrow .km { grid-column: 1 / -1; }
+    .btn.ghost { margin: 10px 0 0; }
+  }
+  @media (max-width: 560px) {
+    .bar-in { padding: 12px 16px; gap: 12px; }
+    .bar nav { gap: 12px; font-size: 13px; }
+    .bar nav a:nth-child(2), .bar nav a:nth-child(3) { display: none; }
+    .hero, .layout { padding-left: 16px; padding-right: 16px; }
+    .keys { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="bar-in">
+  <a class="brand" href="/">Express Briefs <span>API</span></a>
+  <nav aria-label="Site"><a href="#keys">API keys</a><a href="#generate">Reference</a><a href="/pricing">Pricing</a><a href="/">Back to app</a></nav>
+</div></header>
+
+<div id="pay-banner" class="banner" role="status" aria-live="polite" hidden></div>
+
+<div class="hero">
+  <div>
+    <h1>Captions for every platform, from one request.</h1>
+    <p>Send a few details about a property, vehicle, product or event. Get back ready-to-post copy for Instagram, WhatsApp, TikTok, Facebook and more, as clean JSON you can drop straight into your own product.</p>
+    <a class="btn" href="#keys">Get an API key</a><a class="btn ghost" href="#generate">Read the reference</a>
+  </div>
+  <div class="code" aria-label="Example request and response">
+    <div class="code-tabs" role="tablist" aria-label="Language">
+      <button role="tab" aria-selected="true" data-lang="curl">curl</button>
+      <button role="tab" aria-selected="false" data-lang="node">Node.js</button>
+      <button role="tab" aria-selected="false" data-lang="python">Python</button>
+      <button class="copy" id="copy-sample" type="button">Copy</button>
+    </div>
+    <pre id="sample" tabindex="0"></pre>
+    <div class="resp-label">Response</div>
+    <pre id="sample-resp" tabindex="0"></pre>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="side" aria-label="On this page">
+    <a href="#keys">Your API keys</a>
+    <a href="#plans">Plans and billing</a>
+    <a href="#auth">Authentication</a>
+    <a href="#generate">Generate captions</a>
+    <a href="#industries">Industries and fields</a>
+    <a href="#usage">Check usage</a>
+    <a href="#errors">Errors</a>
+  </nav>
+
+  <main>
+    <section id="keys">
+      <h2>Your API keys</h2>
+      <p class="lead">Create a key for each site or app that uses the API, so you can revoke one without breaking the others.</p>
+      <div class="keys" id="keys-panel"><p class="msg">Loading…</p></div>
+    </section>
+
+    <section id="plans">
+      <h2>Plans and billing</h2>
+      <p class="lead">API plans are separate from your Express Briefs website plan. Each has its own monthly generations, so heavy API use never uses up what you have for the website, and the other way round.</p>
+      <p id="plans-note"></p>
+      <div class="tablewrap"><table class="plans" id="plans-table" aria-live="polite"><tr><td>Loading plans…</td></tr></table></div>
+      <p class="msg" id="plans-msg" role="status"></p>
+      <p>Each successful request uses one generation, however many platforms it asks for. Failed and invalid requests are free. Your count resets on the first of each month (UTC).</p>
+      <p>Upgrading takes effect immediately for every key you already have, with nothing to change in your code. The requests-per-minute figure is per key. Payments are processed by Bachs.</p>
+    </section>
+
+    <section id="auth">
+      <h2>Authentication</h2>
+      <p>Send your key in the <code>Authorization</code> header. The <code>X-API-Key</code> header works too.</p>
+<pre class="plain">Authorization: Bearer eb_live_YOUR_KEY</pre>
+      <div class="note warn"><strong>Call the API from your server, not the browser.</strong>
+      A key placed in front-end JavaScript is visible to every visitor, and anyone can copy it and spend your monthly generations. Have your own backend make the request and pass the result to your page.</div>
+      <p>Treat keys like passwords. We only store a fingerprint of each key, so if you lose one we can't show it again. Create a new key and revoke the old one.</p>
+    </section>
+
+    <section id="generate">
+      <h2><span class="verb">POST</span><span class="path">/api/v1/generate</span></h2>
+      <p>Generates a full description plus a caption for each platform you ask for, and three headline options.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td><code>industry</code> <span class="req">required</span></td><td>string</td><td>The type of business: <code>real-estate</code>, <code>automotive</code>, <code>ecommerce</code>, <code>restaurants</code>, <code>fitness</code>, <code>recruitment</code>, <code>events</code>, <code>local-services</code>, <code>hospitality</code>, <code>fashion-resale</code> or <code>wedding-vendors</code>.</td></tr>
+        <tr><td><code>fields</code> <span class="req">required</span></td><td>object</td><td>The details to write about. The keys depend on the industry, so use the <a href="#industries">field explorer</a> below.</td></tr>
+        <tr><td><code>platforms</code> <span class="req">required</span></td><td>string[]</td><td>One or more of <code>WhatsApp</code>, <code>Instagram</code>, <code>Facebook</code>, <code>Twitter</code>, <code>LinkedIn</code>, <code>TikTok</code>, <code>Snapchat</code>, <code>Reddit</code>, <code>Quora</code>. Not case-sensitive.</td></tr>
+        <tr><td><code>tone</code></td><td>string</td><td><code>Professional</code> (default), <code>Casual</code>, <code>Urgent</code>, <code>Luxury</code>, <code>Friendly</code> or <code>Bold</code>.</td></tr>
+        <tr><td><code>features</code></td><td>string[]</td><td>Up to 20 short selling points, such as <code>"24/7 Security"</code>.</td></tr>
+        <tr><td><code>extra</code></td><td>string</td><td>Anything else worth mentioning, up to 1,000 characters.</td></tr>
+      </table></div>
+
+      <h3>Response</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Field</th><th>Description</th></tr>
+        <tr><td><code>captions</code></td><td>An object with one entry per section: <code>full_listing</code>, one key per platform you requested (lowercase, such as <code>instagram</code>), and <code>headlines</code>, which is an array of strings.</td></tr>
+        <tr><td><code>raw</code></td><td>The unparsed text we received. Use it as a fallback if a section is ever missing from <code>captions</code>.</td></tr>
+        <tr><td><code>truncated</code></td><td><code>true</code> if the output hit its length limit and later sections may be cut off. Ask for fewer platforms per request and make a second call for the rest.</td></tr>
+        <tr><td><code>usage</code></td><td>Generations used this month, your monthly limit, your plan, and when the count resets.</td></tr>
+      </table></div>
+      <p>Each successful request uses one generation from your <a href="#plans">API plan</a>, however many platforms you ask for. Failed and invalid requests are free.</p>
+    </section>
+
+    <section id="industries">
+      <h2>Industries and fields</h2>
+      <p>Each industry has its own <code>fields</code>. Pick one to see the keys it expects and the values its dropdowns offer on the website. The same data is available from <code>GET /api/v1/industries/{slug}</code>, without a key, if you'd rather build your form from it.</p>
+      <div class="field"><label for="ind-select">Industry</label><select id="ind-select" aria-controls="ind-table"></select></div>
+      <div class="tablewrap" id="ind-table" aria-live="polite"></div>
+    </section>
+
+    <section id="usage">
+      <h2><span class="verb get">GET</span><span class="path">/api/v1/usage</span></h2>
+      <p>Returns your API plan and how many generations you have used this month. Handy for alerting yourself before you run out.</p>
+<pre class="plain">{
+  "plan": "builder",
+  "used": 12,
+  "limit": 300,
+  "rate_limit_per_min": 30,
+  "resets_at": "2026-10-01T00:00:00.000Z"
+}</pre>
+    </section>
+
+    <section id="errors">
+      <h2>Errors</h2>
+      <p>Errors always look like this, so you can branch on <code>code</code> rather than reading the message:</p>
+<pre class="plain">{ "error": { "code": "invalid_request", "message": "\"platforms\" must be a non-empty array. Valid values: WhatsApp, Instagram, …" } }</pre>
+      <div class="tablewrap"><table>
+        <tr><th>Status</th><th>Code</th><th>What to do</th></tr>
+        <tr><td>400</td><td><code>invalid_request</code></td><td>Something in the request is wrong or missing. The message says which part.</td></tr>
+        <tr><td>401</td><td><code>missing_api_key</code></td><td>No key was sent. Add the <code>Authorization</code> header.</td></tr>
+        <tr><td>401</td><td><code>invalid_api_key</code></td><td>The key is mistyped or has been revoked. Create a new one above.</td></tr>
+        <tr><td>429</td><td><code>limit_reached</code></td><td>You have used all of this month's generations on your API plan. The response includes <code>upgrade_url</code>. Upgrade, or wait for the monthly reset.</td></tr>
+        <tr><td>429</td><td><code>rate_limited</code></td><td>More requests per minute than your plan allows for one key. Wait a moment and retry, or <a href="#plans">upgrade</a> for a higher limit.</td></tr>
+        <tr><td>500</td><td><code>generation_failed</code></td><td>The AI didn't return a result. Retry. Nothing was counted against your quota.</td></tr>
+        <tr><td>503</td><td><code>service_unavailable</code></td><td>Temporary problem on our side. Retry shortly.</td></tr>
+      </table></div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+  var BASE = location.origin;
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ── Hero samples ─────────────────────────────────────────────── */
+  var BODY = '{\n    "industry": "real-estate",\n    "fields": {\n      "propType": "Duplex",\n      "listingType": "For Sale",\n      "location": "Lekki Phase 1, Lagos",\n      "price": "₦85,000,000",\n      "size": "3 bed, 2 bath, 180sqm"\n    },\n    "features": ["24/7 Security", "Gated Community"],\n    "platforms": ["Instagram", "WhatsApp"],\n    "tone": "Luxury"\n  }';
+  var SAMPLES = {
+    curl:
+'curl ' + BASE + '/api/v1/generate \\\n' +
+'  -H "Authorization: Bearer eb_live_YOUR_KEY" \\\n' +
+'  -H "Content-Type: application/json" \\\n' +
+'  -d \'' + BODY.replace(/\n  /g, '\n') + '\'',
+    node:
+'const res = await fetch("' + BASE + '/api/v1/generate", {\n' +
+'  method: "POST",\n' +
+'  headers: {\n' +
+'    Authorization: `Bearer ${process.env.EXPRESSBRIEFS_KEY}`,\n' +
+'    "Content-Type": "application/json",\n' +
+'  },\n' +
+'  body: JSON.stringify({\n' +
+'    industry: "real-estate",\n' +
+'    fields: {\n' +
+'      propType: "Duplex",\n' +
+'      listingType: "For Sale",\n' +
+'      location: "Lekki Phase 1, Lagos",\n' +
+'      price: "₦85,000,000",\n' +
+'      size: "3 bed, 2 bath, 180sqm",\n' +
+'    },\n' +
+'    features: ["24/7 Security", "Gated Community"],\n' +
+'    platforms: ["Instagram", "WhatsApp"],\n' +
+'    tone: "Luxury",\n' +
+'  }),\n' +
+'});\n' +
+'const { captions } = await res.json();\n' +
+'console.log(captions.instagram);',
+    python:
+'import os, requests\n\n' +
+'res = requests.post(\n' +
+'    "' + BASE + '/api/v1/generate",\n' +
+'    headers={"Authorization": "Bearer " + os.environ["EXPRESSBRIEFS_KEY"]},\n' +
+'    json={\n' +
+'        "industry": "real-estate",\n' +
+'        "fields": {\n' +
+'            "propType": "Duplex",\n' +
+'            "listingType": "For Sale",\n' +
+'            "location": "Lekki Phase 1, Lagos",\n' +
+'            "price": "₦85,000,000",\n' +
+'            "size": "3 bed, 2 bath, 180sqm",\n' +
+'        },\n' +
+'        "features": ["24/7 Security", "Gated Community"],\n' +
+'        "platforms": ["Instagram", "WhatsApp"],\n' +
+'        "tone": "Luxury",\n' +
+'    },\n' +
+'    timeout=60,\n' +
+')\n' +
+'print(res.json()["captions"]["instagram"])'
+  };
+  var RESP = '{\n  "industry": "real-estate",\n  "platforms": ["Instagram", "WhatsApp"],\n  "tone": "Luxury",\n  "captions": {\n    "full_listing": "Live above the everyday in Lekki Phase 1…",\n    "whatsapp": "🏡 New listing: Lekki Phase 1…",\n    "instagram": "Some addresses do the talking…\\n#LekkiRealEstate …",\n    "headlines": ["Luxury Duplex in Lekki Phase 1", "…", "…"]\n  },\n  "raw": "[FULL LISTING]\\nLive above…",\n  "truncated": false,\n  "usage": { "used": 1, "limit": 300, "plan": "builder",\n             "resets_at": "2026-10-01T00:00:00.000Z" }\n}';
+
+  var lang = 'curl';
+  function showSample() { $('sample').textContent = SAMPLES[lang]; }
+  $('sample-resp').textContent = RESP;
+  showSample();
+  document.querySelectorAll('.code-tabs [data-lang]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      lang = b.getAttribute('data-lang');
+      document.querySelectorAll('.code-tabs [data-lang]').forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      showSample();
+    });
+  });
+  function copyText(text, btn, done) {
+    var restore = btn.textContent;
+    function ok() { btn.textContent = done; setTimeout(function () { btn.textContent = restore; }, 1600); }
+    if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(ok, function () {}); }
+    else { var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); ok(); } catch (e) {} t.remove(); }
+  }
+  $('copy-sample').addEventListener('click', function () { copyText(SAMPLES[lang], this, 'Copied'); });
+
+  /* ── Small helpers ────────────────────────────────────────────── */
+  function el(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) {
+      if (k === 'class') n.className = attrs[k]; else if (k === 'text') n.textContent = attrs[k]; else n.setAttribute(k, attrs[k]);
+    });
+    (kids || []).forEach(function (c) { n.appendChild(c); });
+    return n;
+  }
+  function api(method, url, body) {
+    var t = localStorage.getItem('ps_token');
+    return fetch(url, {
+      method: method,
+      headers: Object.assign({ 'Content-Type': 'application/json' }, t ? { Authorization: 'Bearer ' + t } : {}),
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, body: j }; }); });
+  }
+  function fmtDate(s) {
+    if (!s) return 'never';
+    var d = new Date(s.replace(' ', 'T') + 'Z');
+    return isNaN(d) ? s : d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  /* ── State shared by the keys panel and the pricing table ─────── */
+  var plans = null;          // from GET /api/v1/plans (public)
+  var myPlan = null;         // name of the signed-in user's API plan, or null if signed out
+  function planByName(n) { return (plans || []).filter(function (x) { return x.name === n; })[0]; }
+  function cap(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
+
+  /* ── API keys panel ───────────────────────────────────────────── */
+  var panel = $('keys-panel');
+
+  function renderLoggedOut() {
+    myPlan = null; renderPlans();
+    panel.textContent = '';
+    panel.appendChild(el('h3', { text: 'Sign in to create a key' }));
+    panel.appendChild(el('p', { text: 'API keys belong to your Express Briefs account. Every account starts on the free developer plan, so you can build and test straight away. Sign in or create a free account, then come back to this page.' }));
+    panel.appendChild(el('a', { class: 'btn', href: '/real-estate/?auth=login&next=/developers/', text: 'Sign in or sign up' }));
+  }
+
+  function planBox(a) {
+    var pct = Math.min(100, Math.round(a.used / a.limit * 100));
+    var meter = el('div', { class: 'meter' + (pct >= 100 ? ' full' : pct >= 80 ? ' hot' : ''), role: 'img', 'aria-label': pct + ' percent of monthly generations used' }, [el('i', { style: 'width:' + pct + '%' })]);
+    var reset = new Date(a.resets_at).toLocaleDateString(undefined, { day: 'numeric', month: 'long', timeZone: 'UTC' });
+    var sub = el('p', { class: 'sub' });
+    sub.appendChild(document.createTextNode(a.used + ' of ' + a.limit + ' generations used. Resets on ' + reset + '. Up to ' + a.rate_limit_per_min + ' requests a minute per key. '));
+    if (pct >= 80) sub.appendChild(el('a', { href: '#plans', text: 'See plans' }));
+    return el('div', { class: 'planbox' }, [
+      el('div', { class: 'top' }, [el('span', {}, [document.createTextNode('API plan: '), el('b', { text: cap(a.plan) })])]),
+      meter, sub
+    ]);
+  }
+
+  function renderKeys(data) {
+    myPlan = data.api.plan; renderPlans();
+    panel.textContent = '';
+    panel.appendChild(el('p', { class: 'who', text: 'Signed in as ' + data.account.email + '.' }));
+    panel.appendChild(planBox(data.api));
+    panel.appendChild(el('h3', { text: 'Keys' }));
+
+    if (!data.keys.length) {
+      panel.appendChild(el('div', { class: 'empty', text: 'No keys yet. Name your first one below, for example after the site that will use it.' }));
+    }
+    data.keys.forEach(function (k) {
+      var revoke = el('button', { class: 'btn small danger', type: 'button', text: 'Revoke' });
+      revoke.addEventListener('click', function () {
+        if (!confirm('Revoke "' + k.name + '"? Anything using this key will stop working immediately.')) return;
+        api('DELETE', '/api/keys/' + k.id).then(function (r) {
+          if (r.status === 200) load(); else showMsg(r.body.error || 'Could not revoke the key.', true);
+        });
+      });
+      panel.appendChild(el('div', { class: 'keyrow' }, [
+        el('div', { class: 'kn', text: k.name }),
+        el('div', { class: 'kp', text: k.key_prefix + '…' }),
+        el('div', { class: 'km', text: 'Created ' + fmtDate(k.created_at) + '. Last used ' + fmtDate(k.last_used_at) + '. ' + k.used_this_month + ' this month.' }),
+        revoke
+      ]));
+    });
+
+    var input = el('input', { type: 'text', maxlength: '60', placeholder: 'Key name, e.g. My website', 'aria-label': 'Key name' });
+    var btn = el('button', { class: 'btn', type: 'button', text: 'Create key' });
+    panel.appendChild(el('div', { class: 'create' }, [input, btn]));
+    panel.appendChild(el('p', { class: 'msg', id: 'keys-msg', role: 'status' }));
+    panel.appendChild(el('div', { id: 'newkey' }));
+
+    function submit() {
+      var name = input.value.trim();
+      if (!name) { showMsg('Give the key a name first.', true); input.focus(); return; }
+      btn.disabled = true;
+      api('POST', '/api/keys', { name: name }).then(function (r) {
+        btn.disabled = false;
+        if (r.status === 403 && /verify your email/i.test(r.body.error || '')) { showVerifyPrompt(); return; }
+        if (r.status !== 201) { showMsg(r.body.error || 'Could not create the key.', true); return; }
+        load(function () { showNewKey(r.body); });
+      });
+    }
+    btn.addEventListener('click', submit);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
+    if (data.keys.length >= data.max_keys) showMsg('You have ' + data.max_keys + ' active keys, which is the maximum. Revoke one to create another.', false);
+  }
+
+  function showMsg(text, isErr) {
+    var m = $('keys-msg'); if (!m) return;
+    m.textContent = text; m.className = 'msg' + (isErr ? ' err' : '');
+  }
+
+  function showVerifyPrompt() {
+    var m = $('keys-msg'); if (!m) return;
+    m.className = 'msg err'; m.textContent = '';
+    m.appendChild(document.createTextNode('Please verify your email address before creating an API key. '));
+    var b = el('button', { type: 'button', class: 'btn small', style: 'margin-left:6px', text: 'Resend verification email' });
+    b.addEventListener('click', function () {
+      b.disabled = true; b.textContent = 'Sending…';
+      api('POST', '/api/auth/resend-verification', { next: '/developers/' }).then(function (r) {
+        if (r.status === 200) { m.textContent = ''; m.className = 'msg'; m.appendChild(document.createTextNode('Verification email sent — check your inbox (and spam folder), then click the link in it. This page will update automatically.')); }
+        else { b.disabled = false; b.textContent = 'Resend verification email'; showMsg((r.body && r.body.error) || 'Could not send the email. Please try again.', true); }
+      }).catch(function () { b.disabled = false; b.textContent = 'Resend verification email'; showMsg('Could not reach the server. Check your connection and try again.', true); });
+    });
+    m.appendChild(b);
+  }
+
+  function showNewKey(k) {
+    var box = $('newkey'); if (!box) return;
+    var code = el('code', { text: k.key });
+    var copy = el('button', { class: 'btn small', type: 'button', text: 'Copy key' });
+    copy.addEventListener('click', function () { copyText(k.key, copy, 'Copied'); });
+    box.textContent = '';
+    box.appendChild(el('div', { class: 'newkey', role: 'alert' }, [
+      el('p', { text: 'Copy "' + k.name + '" now. For your security, it won\'t be shown again.' }),
+      el('div', { class: 'val' }, [code, copy])
+    ]));
+    box.scrollIntoView({ block: 'nearest' });
+  }
+
+  function load(after) {
+    if (!localStorage.getItem('ps_token')) { renderLoggedOut(); return; }
+    api('GET', '/api/keys').then(function (r) {
+      if (r.status === 401) { localStorage.removeItem('ps_token'); renderLoggedOut(); return; }
+      if (r.status !== 200) { panel.textContent = 'Could not load your keys. Refresh to try again.'; return; }
+      renderKeys(r.body);
+      if (after) after();
+    }).catch(function () { panel.textContent = 'Could not load your keys. Check your connection and refresh.'; });
+  }
+
+  /* ── Plans and billing ────────────────────────────────────────── */
+  function renderPlans() {
+    var t = $('plans-table'), note = $('plans-note');
+    if (!plans) return;
+    var cur = planByName(myPlan);
+    note.textContent = myPlan
+      ? 'You are on the ' + cap(myPlan) + ' plan. Upgrade any time.'
+      : 'Sign in to see your plan and upgrade. Every account starts on Developer, which is free.';
+    t.textContent = '';
+    t.appendChild(el('tr', {}, ['Plan', 'Generations per month', 'Requests per minute', 'Price', ''].map(function (h) { return el('th', { text: h }); })));
+    plans.forEach(function (pl) {
+      var action = el('td');
+      if (myPlan === pl.name) action.appendChild(el('span', { class: 'tag', text: 'Your plan' }));
+      else if (myPlan && pl.price_usd > 0 && cur && pl.monthly_limit > cur.monthly_limit) {
+        var b = el('button', { class: 'btn small', type: 'button', text: 'Upgrade to ' + cap(pl.name) });
+        b.addEventListener('click', function () { checkout(pl.name, b); });
+        action.appendChild(b);
+      }
+      var name = el('td'); name.appendChild(el('b', { text: cap(pl.name) })); name.appendChild(el('div', { class: 'opts', text: pl.description || '' }));
+      var row = el('tr', myPlan === pl.name ? { class: 'current' } : {}, [
+        name,
+        el('td', { text: pl.monthly_limit.toLocaleString() }),
+        el('td', { text: String(pl.rate_limit_per_min) }),
+        el('td', { class: 'price', text: pl.price_usd ? '$' + pl.price_usd + '/mo' : 'Free' }),
+        action
+      ]);
+      t.appendChild(row);
+    });
+  }
+
+  function planMsg(text, isErr) { var m = $('plans-msg'); m.textContent = text; m.className = 'msg' + (isErr ? ' err' : ''); }
+
+  function checkout(name, btn) {
+    btn.disabled = true; planMsg('Taking you to checkout…', false);
+    api('POST', '/api/payment/initialize', { kind: 'api', plan: name }).then(function (r) {
+      if (r.body && r.body.authorization_url) { location.href = r.body.authorization_url; return; }
+      btn.disabled = false;
+      if (r.status === 401) { localStorage.removeItem('ps_token'); renderLoggedOut(); planMsg('Your session expired. Sign in again to upgrade.', true); return; }
+      planMsg((r.body && r.body.error) || 'Could not start checkout. Please try again.', true);
+    }).catch(function () { btn.disabled = false; planMsg('Could not reach the server. Check your connection and try again.', true); });
+  }
+
+  fetch('/api/v1/plans').then(function (r) { return r.json(); }).then(function (d) { plans = d.plans; renderPlans(); })
+    .catch(function () { $('plans-table').textContent = 'Could not load plans. Refresh to try again.'; });
+
+  /* ── Coming back from checkout ────────────────────────────────── */
+  function banner(text, bad) {
+    var b = $('pay-banner'); b.hidden = false; b.className = 'banner' + (bad ? ' bad' : ''); b.textContent = '';
+    b.appendChild(el('span', { text: text }));
+    var x = el('button', { type: 'button', 'aria-label': 'Dismiss', text: '×' });
+    x.addEventListener('click', function () { b.hidden = true; });
+    b.appendChild(x);
+  }
+  function pollPayment(ref, n) {
+    fetch('/api/payment/status?ref=' + encodeURIComponent(ref)).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.status === 'success') { banner('Payment received. Your new API plan is active, and your existing keys already use it.', false); load(); }
+      else if (d.status === 'failed') banner('The payment was not completed, so nothing was charged to your plan. You can try again below.', true);
+      else if (n < 12) setTimeout(function () { pollPayment(ref, n + 1); }, 2500);
+      else banner('Still confirming your payment. This can take a minute, and we\'ll email you once your plan is active.', false);
+    }).catch(function () {});
+  }
+  (function () {
+    var q = new URLSearchParams(location.search), pay = q.get('payment'), verified = q.get('verified');
+    if (pay === 'success') banner('Payment received. Your new API plan is active, and your existing keys already use it.', false);
+    else if (pay === 'processing' && q.get('ref')) { banner('Confirming your payment. This only takes a few seconds…', false); pollPayment(q.get('ref'), 0); }
+    else if (pay) banner('The payment was not completed. You can try again below.', true);
+    else if (verified === '1') { banner('Email verified — you can create an API key now.', false); load(); }
+    else if (verified === 'fail') banner('That verification link is invalid or has expired. Request a new one below.', true);
+    if (pay || verified) history.replaceState({}, '', location.pathname + location.hash);
+  })();
+
+  load();
+
+  /* ── Industry field explorer ──────────────────────────────────── */
+  var sel = $('ind-select'), tbl = $('ind-table');
+  function renderIndustry(slug) {
+    fetch('/api/v1/industries/' + encodeURIComponent(slug)).then(function (r) { return r.json(); }).then(function (d) {
+      var t = el('table');
+      t.appendChild(el('tr', {}, [el('th', { text: 'Key' }), el('th', { text: 'Field' }), el('th', { text: 'Notes' })]));
+      d.fields.forEach(function (f) {
+        var notes = el('td');
+        notes.appendChild(el('span', { class: f.required ? 'req' : '', text: f.required ? 'Required. ' : 'Optional. ' }));
+        if (f.options) notes.appendChild(el('span', { class: 'opts', text: 'Options: ' + f.options.join(', ') }));
+        else if (f.placeholder) notes.appendChild(el('span', { class: 'opts', text: 'Text, e.g. ' + f.placeholder.replace(/^e\.g\.\s*/i, '') }));
+        else notes.appendChild(el('span', { class: 'opts', text: 'Text' }));
+        t.appendChild(el('tr', {}, [el('td', {}, [el('code', { text: f.key })]), el('td', { text: f.label }), notes]));
+      });
+      tbl.textContent = ''; tbl.appendChild(t);
+      if (d.features && d.features.length) {
+        tbl.appendChild(el('p', { class: 'opts', text: 'Popular values for features: ' + d.features.join(', ') + '. You can send your own too.' }));
+      }
+    }).catch(function () { tbl.textContent = 'Could not load fields.'; });
+  }
+  fetch('/api/v1/industries').then(function (r) { return r.json(); }).then(function (d) {
+    d.industries.forEach(function (i) { sel.appendChild(el('option', { value: i.slug, text: i.name + ' (' + i.slug + ')' })); });
+    renderIndustry(sel.value);
+  }).catch(function () { tbl.textContent = 'Could not load industries.'; });
+  sel.addEventListener('change', function () { renderIndustry(sel.value); });
+
+  /* ── Highlight current section in the side nav ────────────────── */
+  var links = [].slice.call(document.querySelectorAll('.side a'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    document.querySelectorAll('main section').forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
