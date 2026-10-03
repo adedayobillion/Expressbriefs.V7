@@ -383,6 +383,9 @@ async function register(){
   await loadMe();
 }
 
+// Used when a session silently goes invalid (expired/bad token on load) —
+// just drop back to this page's own sign-in screen, no navigation, so an
+// expired session doesn't yank someone away from where they were.
 function logout(){
   token=null;cUser=null;localStorage.removeItem('ps_token');
   ['loginEmail','loginPassword','regName','regEmail','regPassword'].forEach(function(id){
@@ -390,6 +393,13 @@ function logout(){
   });
   hideAuthForm();
   showScreen('authScreen');
+}
+// Used for the explicit "Sign out" button — a deliberate action should
+// send people back to the homepage, not leave them staring at a login form
+// for whichever industry they happened to be using.
+function signOut(){
+  token=null;cUser=null;localStorage.removeItem('ps_token');
+  window.location.href='/';
 }
 function showErr(el,m){el.textContent=m;el.style.display='block';}
 
