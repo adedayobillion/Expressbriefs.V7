@@ -177,7 +177,7 @@ app.post('/api/webhooks/bachs', express.raw({ type: 'application/json' }), async
               <h2 style="color:#2E7A52">Plan upgraded!</h2>
               <p>Hi ${user.name}, your account has been upgraded to the <strong>${payment.plan}</strong> plan.</p>
               <p>You can now generate more listings every month. Enjoy!</p>
-              <a href="${APP_URL}/real-estate/" style="display:inline-block;background:#2E7A52;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">Go to Express Briefs</a>
+              <a href="${APP_URL}/get-started/" style="display:inline-block;background:#2E7A52;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">Go to Express Briefs</a>
             </div>
           `)
         }
@@ -563,7 +563,7 @@ app.post('/api/admin/set-plan', requireAdmin, (req, res) => {
         <h2 style="color:#2E7A52">Plan upgraded!</h2>
         <p>Hi ${user.name}, your account has been upgraded to the <strong>${plan}</strong> plan.</p>
         <p>You can now generate more listings every month. Enjoy!</p>
-        <a href="${APP_URL}/real-estate/" style="display:inline-block;background:#2E7A52;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">Go to Express Briefs</a>
+        <a href="${APP_URL}/get-started/" style="display:inline-block;background:#2E7A52;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">Go to Express Briefs</a>
       </div>
     `)
   }
@@ -584,7 +584,7 @@ app.post('/api/admin/set-api-plan', requireAdmin, (req, res) => {
 // VERIFY EMAIL
 app.get('/api/auth/verify-email', (req, res) => {
   const { token } = req.query
-  const dest = safeNextPath(req.query.next) || '/real-estate/'
+  const dest = safeNextPath(req.query.next) || '/get-started/'
   if (!token) return res.redirect(dest + '?verified=fail')
   const row = getVerifyToken.get(token)
   if (!row) return res.redirect(dest + '?verified=fail')
@@ -623,7 +623,7 @@ app.post('/api/auth/forgot-password', authLimiter, async (req, res) => {
     deleteOldResetTokens.run(user.id)
     const resetToken = crypto.randomBytes(32).toString('hex')
     createResetToken.run(user.id, resetToken)
-    const resetUrl = `${APP_URL}/real-estate/?reset_token=${resetToken}`
+    const resetUrl = `${APP_URL}/get-started/?reset_token=${resetToken}`
     sendMail(email, 'Reset your Express Briefs password', `
       <div style="font-family:sans-serif;max-width:480px;margin:auto">
         <h2 style="color:#2E7A52">Reset your password</h2>
@@ -708,9 +708,9 @@ app.post('/api/payment/initialize', requireAuth, async (req, res) => {
 // since a redirect can be closed early, retried, or forged by the client.
 app.get('/api/payment/verify', async (req, res) => {
   const reference = req.query.ref
-  if (!reference) return res.redirect('/real-estate/?payment=error')
+  if (!reference) return res.redirect('/get-started/?payment=error')
   const payment = getPayment.get(reference)
-  if (!payment) return res.redirect('/real-estate/?payment=error')
+  if (!payment) return res.redirect('/get-started/?payment=error')
   const base = `/${payment.industry || 'real-estate'}/`
   if (payment.status === 'success') return res.redirect(`${base}?payment=success`)
   if (payment.status === 'failed') return res.redirect(`${base}?payment=failed`)
