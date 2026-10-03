@@ -136,37 +136,39 @@ footer a { color:var(--muted); }
       <div class="plan-name">Free</div>
       <div class="plan-price">$0</div>
       <div class="plan-quota">5 listings / month</div>
-      <a href="/real-estate/" id="planFree" class="plan-cta">Start Free</a>
+      <a href="/get-started/" id="planFree" class="plan-cta">Start Free</a>
     </div>
     <div class="plan-card hot">
       <div class="plan-name">Starter</div>
       <div class="plan-price">$5<span>/mo</span></div>
       <div class="plan-quota">50 listings / month</div>
-      <a href="/real-estate/?plan=starter" id="planStarter" class="plan-cta">Get Starter</a>
+      <a href="/get-started/?plan=starter" id="planStarter" class="plan-cta">Get Starter</a>
     </div>
     <div class="plan-card">
       <div class="plan-name">Pro</div>
       <div class="plan-price">$12<span>/mo</span></div>
       <div class="plan-quota">200 listings / month</div>
-      <a href="/real-estate/?plan=pro" id="planPro" class="plan-cta">Get Pro</a>
+      <a href="/get-started/?plan=pro" id="planPro" class="plan-cta">Get Pro</a>
     </div>
     <div class="plan-card">
       <div class="plan-name">Agency</div>
       <div class="plan-price">$25<span>/mo</span></div>
       <div class="plan-quota">999 listings / month</div>
-      <a href="/real-estate/?plan=agency" id="planAgency" class="plan-cta">Get Agency</a>
+      <a href="/get-started/?plan=agency" id="planAgency" class="plan-cta">Get Agency</a>
     </div>
   </div>
 
   <script>
     // If the visitor arrived from a specific industry's page (via
-    // /pricing?industry=automotive), keep them in that industry's app
-    // instead of dropping them into real-estate by default.
+    // /pricing?industry=automotive) AND already has a session, send the
+    // plan straight to that industry's app. Otherwise — including a
+    // brand-new visitor — the default is the generic sign-in/sign-up
+    // flow, never a silent drop into real-estate.
     (function(){
       var params = new URLSearchParams(window.location.search);
       var ind = params.get('industry');
       var valid = ['real-estate','automotive','ecommerce','restaurants','fitness','recruitment','events','local-services','hospitality','fashion-resale','wedding-vendors'];
-      if(ind && valid.indexOf(ind) !== -1){
+      if(ind && valid.indexOf(ind) !== -1 && localStorage.getItem('ps_token')){
         document.getElementById('planFree').href = '/'+ind+'/';
         document.getElementById('planStarter').href = '/'+ind+'/?plan=starter';
         document.getElementById('planPro').href = '/'+ind+'/?plan=pro';
