@@ -221,8 +221,8 @@
         <a href="/developers/">API</a>
       </div>
       <div id="topbarGuest" class="nav-guest">
-        <a class="nav-login" href="/real-estate/?auth=login">Log in</a>
-        <a class="nav-signup" href="/real-estate/?auth=register">Get started</a>
+        <a class="nav-login" href="/get-started/?auth=login">Log in</a>
+        <a class="nav-signup" href="/get-started/?auth=register">Get started</a>
       </div>
       <div id="topbarAccount" class="nav-account">
         <div class="nav-account-info">
@@ -243,7 +243,7 @@
         <h1>One brief.<br>Every platform,<br>in its own voice.</h1>
         <p class="hero-copy">Write the details once. Get back copy that already sounds right for WhatsApp, Instagram, Facebook, LinkedIn, TikTok, Snapchat, Reddit and Quora — tuned for real estate, cars, food, fitness, weddings and seven other trades.</p>
         <div class="cta-row">
-          <a class="cta-primary" href="/real-estate/" id="heroPrimaryCta">Try it free with Real Estate</a>
+          <a class="cta-primary" href="/get-started/" id="heroPrimaryCta">Get started free</a>
           <a class="cta-secondary" href="#industries">See all 11 industries</a>
         </div>
         <div class="hero-tags">
@@ -429,7 +429,7 @@
         <h2>Pick a trade and start with one brief.</h2>
         <p>Once the message is clear, the product sells itself.</p>
       </div>
-      <a class="cta-primary" href="/real-estate/">Start with Real Estate</a>
+      <a class="cta-primary" href="/get-started/">Get started free</a>
     </div>
   </section>
 
@@ -501,22 +501,22 @@ document.getElementById('footYear').textContent = new Date().getFullYear();
   });
 })();
 
-// Prefetch the most likely next page (Real Estate) on hover/touch so the
-// click feels instant. Cheap win, no framework needed.
+// Prefetch the sign-in/sign-up page on hover/touch so the click feels
+// instant — this is the real first stop now, not any one industry.
 (function () {
   var done = false;
-  function prefetchRealEstate() {
+  function prefetchGetStarted() {
     if (done) return;
     done = true;
     var link = document.createElement('link');
     link.rel = 'prefetch';
-    link.href = '/real-estate/';
+    link.href = '/get-started/';
     document.head.appendChild(link);
   }
-  var triggers = document.querySelectorAll('a[href="/real-estate/"]');
+  var triggers = document.querySelectorAll('a[href^="/get-started/"]');
   triggers.forEach(function (el) {
-    el.addEventListener('mouseenter', prefetchRealEstate, { once: true });
-    el.addEventListener('touchstart', prefetchRealEstate, { once: true, passive: true });
+    el.addEventListener('mouseenter', prefetchGetStarted, { once: true });
+    el.addEventListener('touchstart', prefetchGetStarted, { once: true, passive: true });
   });
 })();
 </script>

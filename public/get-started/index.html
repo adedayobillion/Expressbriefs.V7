@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Express Briefs — Sign in or create your account</title>
+<meta name="description" content="Sign in or create your free Express Briefs account, then pick the industry you work in.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://expressbriefs.com/get-started/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="author" content="Express Briefs">
+<script>
+  window.GTM_ID = 'GTM-5G3NRJWM';
+  window.dataLayer = window.dataLayer || [];
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
+<style>
+  /* This page reuses app.css's tokens (--ink, --leaf, --forest, --gold,
+     --paper…) and its .auth-left / .auth-right / .btn-auth / .fi / .fg /
+     .auth-tabs / .auth-form component styles so it looks and behaves
+     exactly like the auth screens inside each industry app — the only
+     difference is this page isn't bound to any single industry, and it
+     ends in an industry-picker step instead of a compose tool. */
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  .nav { background: var(--paper); border-bottom: 2px solid var(--ink); }
+  .nav-in { max-width: 1180px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; }
+  .brand { display: flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; }
+  .brand-mark { width: 38px; height: 38px; background: var(--leaf); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; border: 2px solid var(--ink); }
+  .brand-name { font-family: var(--serif); font-size: 19px; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); white-space: nowrap; }
+  .nav-back { margin-left: auto; font-family: var(--sans); font-weight: 600; font-size: 14px; color: var(--ink); }
+  .nav-back:hover { color: var(--leaf); }
+
+  /* ── Step system: two full-screen steps, only one visible at a time ── */
+  .step { display: none; }
+  .step.active { display: block; }
+  #stepAuth.active { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 65px); }
+  @media (max-width: 960px) { #stepAuth.active { grid-template-columns: 1fr; } }
+
+  /* Step 1's right panel shows the tabs/forms directly — no teaser card,
+     since the whole point of this page is to sign in or register */
+  #stepAuth .auth-right { align-items: flex-start; padding-top: 72px; }
+  @media (max-width: 960px) { #stepAuth .auth-right { padding-top: 48px; } }
+
+  /* ── Step 2: industry picker, styled like the homepage's signboard tiles ── */
+  .pick-hero { padding: 64px 24px 8px; }
+  .pick-eyebrow { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; background: var(--paper2); border: 1.5px solid rgba(50,46,37,0.2); border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--leaf); margin-bottom: 16px; }
+  .pick-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .pick-hero h1 { font-family: var(--serif); font-weight: 900; font-size: clamp(30px, 4vw, 46px); line-height: 1.04; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 10px; max-width: 30rem; }
+  .pick-hero p { font-size: 15.5px; line-height: 1.6; color: rgba(50,46,37,.75); max-width: 36rem; margin: 0; }
+  .pick-body { padding: 28px 24px 90px; }
+  .industry-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+  .tile { display: flex; flex-direction: column; gap: 12px; border: 1.75px solid var(--ink); border-radius: 16px; padding: 20px; color: var(--ink); box-shadow: 4px 4px 0 rgba(50,46,37,.22); transition: transform .12s ease, box-shadow .12s ease; text-decoration: none; }
+  .tile:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(50,46,37,.3); }
+  .tile-c0 { background: var(--leaf); color: #fff; } .tile-c1 { background: var(--paper); }
+  .tile-c2 { background: var(--paper2); }  .tile-c3 { background: #F0DFB8; }
+  .tile-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--forest); color: #fff; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  .tile-c0 h3 { color: #fff; } .tile-c0 .tile-icon { background: #fff; color: var(--ink); }
+  .tile-c0 p { color: rgba(255,255,255,.85); }
+  .tile h3 { font-family: var(--serif); font-size: 16.5px; font-weight: 800; margin: 0; }
+  .tile p { font-size: 13px; line-height: 1.55; margin: 0; opacity: .82; }
+  @media (max-width: 980px) { .industry-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .industry-grid { grid-template-columns: 1fr; } .pick-hero { padding: 44px 18px 4px; } .pick-body { padding: 22px 18px 70px; } }
+
+  .pick-switch { font-size: 13px; color: rgba(50,46,37,.6); margin-top: 26px; }
+  .pick-switch button { background: none; border: none; font: inherit; color: var(--leaf); font-weight: 700; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/">
+      <div class="brand-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 3a1 1 0 0 1 1-1h7l6 6v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3z" fill="white" opacity="0.95"/>
+          <path d="M13 2v5a1 1 0 0 0 1 1h5" fill="white" opacity="0.35"/>
+        </svg>
+      </div>
+      <span class="brand-name">Express Briefs</span>
+    </a>
+    <a class="nav-back" href="/">← Back to home</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ══════════ STEP 1 — SIGN IN / CREATE ACCOUNT (no industry involved) ══════════ -->
+  <div class="step active" id="stepAuth">
+
+    <div class="auth-left">
+      <div class="auth-hero">
+        <div class="auth-eyebrow">
+          <div class="auth-eyebrow-dot"></div>
+          <span>Create once. Market everywhere.</span>
+        </div>
+        <h1>One account.<br>Every <em>industry</em>,<br>covered.</h1>
+        <p>Sign in or create your free account, then pick the trade you work in — real estate, cars, food, fitness, weddings and more. Express Briefs writes platform-ready copy in seconds.</p>
+      </div>
+
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="#7ec8a0"><path d="M10 2l1.8 5.2L17 9l-5.2 1.8L10 16l-1.8-5.2L3 9l5.2-1.8L10 2z"/></svg>
+          </div>
+          <div class="auth-feature-text">
+            <strong>AI writes in under 5 seconds</strong>
+            <span>Powered by powerful AI models</span>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#7ec8a0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5a2 2 0 0 1 2.83 2.83L6 16.6 2 18l1.4-4L13.5 3.5z"/></svg>
+          </div>
+          <div class="auth-feature-text">
+            <strong>9 platforms at once</strong>
+            <span>WhatsApp, Instagram, TikTok, Facebook, LinkedIn and more</span>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#7ec8a0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+          </div>
+          <div class="auth-feature-text">
+            <strong>11 industries covered</strong>
+            <span>Pick yours right after you sign up — no wrong door</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-right">
+      <div class="auth-form-wrap" id="authFormWrap" style="max-width:400px">
+        <h2 id="authHeading">Create your free account</h2>
+        <p class="sub" id="authSub">Free to start — no credit card required.</p>
+
+        <div class="auth-tabs" id="authTabs">
+          <button class="auth-tab" onclick="switchTab('login')">Sign In</button>
+          <button class="auth-tab active" onclick="switchTab('register')">Create Account</button>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="auth-form hidden" id="loginForm">
+          <div class="aerr" id="loginError"></div>
+          <div class="fg">
+            <label class="fl">Email Address</label>
+            <input class="fi" type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email">
+          </div>
+          <div class="fg">
+            <label class="fl">Password</label>
+            <div class="pw-wrap">
+              <input class="fi" type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+              <button type="button" class="pw-eye" onclick="togglePw('loginPassword',this)" aria-label="Show password">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>
+              </button>
+            </div>
+            <button type="button" class="forgot-link" onclick="showForgot()">Forgot password?</button>
+          </div>
+          <button class="btn-auth" onclick="login()" id="loginBtn">
+            Sign In <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M3 10h14M10 3l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- REGISTER -->
+        <div class="auth-form" id="registerForm">
+          <div class="aerr" id="registerError"></div>
+          <div class="fg">
+            <label class="fl">Full Name</label>
+            <input class="fi" type="text" id="regName" placeholder="e.g. John Smith" autocomplete="name">
+          </div>
+          <div class="fg">
+            <label class="fl">Email Address</label>
+            <input class="fi" type="email" id="regEmail" placeholder="you@email.com" autocomplete="email">
+          </div>
+          <div class="fg">
+            <label class="fl">Password</label>
+            <div class="pw-wrap">
+              <input class="fi" type="password" id="regPassword" placeholder="Min 8 characters" autocomplete="new-password" onkeydown="if(event.key==='Enter')register()">
+              <button type="button" class="pw-eye" onclick="togglePw('regPassword',this)" aria-label="Show password">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>
+              </button>
+            </div>
+          </div>
+          <button class="btn-auth" onclick="register()" id="registerBtn">
+            Create Free Account <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M3 10h14M10 3l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- FORGOT PASSWORD -->
+        <div class="auth-form hidden" id="forgotForm">
+          <button type="button" class="back-to-login" onclick="hideForgot()">← Back to Sign In</button>
+          <div class="aerr" id="forgotError"></div>
+          <div class="aerr" id="forgotSuccess" style="background:rgba(46,122,82,0.08);border-color:rgba(46,122,82,0.2);color:var(--sage)"></div>
+          <p style="font-size:13px;color:var(--muted);margin-top:2px">Enter your email and we'll send a reset link. Expires in 1 hour.</p>
+          <div class="fg">
+            <label class="fl">Email Address</label>
+            <input class="fi" type="email" id="forgotEmail" placeholder="you@email.com" onkeydown="if(event.key==='Enter')forgotPassword()">
+          </div>
+          <button class="btn-auth" onclick="forgotPassword()" id="forgotBtn">
+            Send Reset Link <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M3 10h14M10 3l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- RESET PASSWORD (shown via ?reset_token= URL param) -->
+        <div class="auth-form hidden" id="resetForm">
+          <div class="aerr" id="resetError"></div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:4px">Enter your new password below.</p>
+          <div class="fg">
+            <label class="fl">New Password</label>
+            <div class="pw-wrap">
+              <input class="fi" type="password" id="resetPassword" placeholder="Min 8 characters" autocomplete="new-password">
+              <button type="button" class="pw-eye" onclick="togglePw('resetPassword',this)" aria-label="Show password">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="fl">Confirm New Password</label>
+            <div class="pw-wrap">
+              <input class="fi" type="password" id="resetConfirm" placeholder="Repeat new password" autocomplete="new-password" onkeydown="if(event.key==='Enter')doResetPassword()">
+              <button type="button" class="pw-eye" onclick="togglePw('resetConfirm',this)" aria-label="Show password">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>
+              </button>
+            </div>
+          </div>
+          <button class="btn-auth" onclick="doResetPassword()" id="resetBtn">
+            Set New Password <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M3 10h14M10 3l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ STEP 2 — PICK AN INDUSTRY (shown right after sign in / sign up) ══════════ -->
+  <div class="step" id="stepPick">
+    <div class="pick-hero wrap">
+      <div class="pick-eyebrow"><div class="pick-eyebrow-dot"></div><span id="pickGreeting">You're in</span></div>
+      <h1>Pick the industry you work in.</h1>
+      <p>Each one has its own fields, tone presets and example output — your account and plan carry over no matter which you choose, and you can switch anytime.</p>
+    </div>
+    <div class="pick-body wrap">
+      <div class="industry-grid" id="industryGrid">
+        <a class="tile tile-c0" href="/real-estate/" data-slug="real-estate">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg></div>
+          <h3>Real Estate</h3>
+          <p>Built for agents, Airbnb hosts and developers.</p>
+        </a>
+        <a class="tile tile-c1" href="/automotive/" data-slug="automotive">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/><path d="M3 17V11l2-5h10l4 5v6"/></svg></div>
+          <h3>Automotive</h3>
+          <p>Built for used car dealers and auto brokers.</p>
+        </a>
+        <a class="tile tile-c2" href="/ecommerce/" data-slug="ecommerce">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3M3 9h18l-1 11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2L3 9Z"/><path d="M8 12v3M16 12v3"/></svg></div>
+          <h3>E-Commerce</h3>
+          <p>Built for online sellers, Etsy shops and small brands.</p>
+        </a>
+        <a class="tile tile-c3" href="/restaurants/" data-slug="restaurants">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a3 3 0 0 0 3 3v8M9 3v10M12 3v10M18 3c-2 2-2 5 0 7v10"/></svg></div>
+          <h3>Restaurants &amp; Food</h3>
+          <p>Built for restaurants, food trucks and home chefs.</p>
+        </a>
+        <a class="tile tile-c0" href="/fitness/" data-slug="fitness">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8v8M20 8v8M2 10v4M22 10v4M7 8v8M17 8v8"/></svg></div>
+          <h3>Fitness &amp; Wellness</h3>
+          <p>Built for gyms, studios and personal trainers.</p>
+        </a>
+        <a class="tile tile-c1" href="/recruitment/" data-slug="recruitment">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8Z"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
+          <h3>Recruitment &amp; Staffing</h3>
+          <p>Built for recruiters and hiring managers.</p>
+        </a>
+        <a class="tile tile-c2" href="/events/" data-slug="events">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 0 0 4v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 0 1 0-4V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3Z"/></svg></div>
+          <h3>Events &amp; Ticketing</h3>
+          <p>Built for promoters, venues and ticket sellers.</p>
+        </a>
+        <a class="tile tile-c3" href="/local-services/" data-slug="local-services">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2 2.8-2.8Z"/></svg></div>
+          <h3>Local Services</h3>
+          <p>Built for cleaners, electricians and salons.</p>
+        </a>
+        <a class="tile tile-c0" href="/hospitality/" data-slug="hospitality">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="M8 9V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3M3 13h18"/></svg></div>
+          <h3>Hospitality &amp; Travel</h3>
+          <p>Built for hotels, resorts and tour operators.</p>
+        </a>
+        <a class="tile tile-c1" href="/fashion-resale/" data-slug="fashion-resale">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l3 3 1-1v10h8V9l1 1 3-3-4-4-2 2h-4l-2-2Z"/></svg></div>
+          <h3>Fashion &amp; Resale</h3>
+          <p>Built for boutiques, thrift resellers and stylists.</p>
+        </a>
+        <a class="tile tile-c2" href="/wedding-vendors/" data-slug="wedding-vendors">
+          <div class="tile-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-5-10-9.3C.4 8.3 2 4 6 4c2.2 0 3.8 1.3 6 4 2.2-2.7 3.8-4 6-4 4 0 5.6 4.3 4 7.7C19.5 16 12 21 12 21Z"/></svg></div>
+          <h3>Weddings &amp; Event Vendors</h3>
+          <p>Built for photographers, caterers and planners.</p>
+        </a>
+      </div>
+      <p class="pick-switch">Signed in as <strong id="pickUserEmail"></strong> · <button type="button" onclick="doLogout()">sign out</button></p>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var token = localStorage.getItem('ps_token');
+var pendingPlan = null, redirectAfterAuth = null;
+
+/* ── bootstrap: query params, existing session, reset-token deep link ── */
+window.addEventListener('DOMContentLoaded', function () {
+  var params = new URLSearchParams(window.location.search);
+
+  var plan = params.get('plan');
+  if (plan && ['starter','pro','agency'].includes(plan)) pendingPlan = plan;
+
+  var next = params.get('next');
+  if (next && next.charAt(1) !== '/' && /^\/[a-zA-Z0-9\/_-]*\/?$/.test(next)) redirectAfterAuth = next;
+
+  if (params.get('reset_token')) {
+    _resetToken = params.get('reset_token');
+    token = null; localStorage.removeItem('ps_token');
+    window.history.replaceState({}, '', window.location.pathname);
+    switchStep('stepAuth');
+    ['loginForm','registerForm','forgotForm'].forEach(function (id) { document.getElementById(id).classList.add('hidden'); });
+    document.getElementById('resetForm').classList.remove('hidden');
+    document.getElementById('authTabs').style.display = 'none';
+    document.getElementById('authHeading').textContent = 'Set New Password';
+    document.getElementById('authSub').textContent = 'Enter your new password below';
+    return;
+  }
+
+  var authReq = params.get('auth');
+  var verified = params.get('verified');
+  var payment = params.get('payment');
+  window.history.replaceState({}, '', window.location.pathname);
+
+  if (verified === '1') toast('Email verified! You\'re all set.', 'success');
+  else if (verified === 'fail') toast('That verification link is invalid or expired.', 'error');
+  if (payment === 'error') toast('We couldn\'t find that payment — please try again.', 'error');
+
+  if (token) {
+    verifySession();
+  } else {
+    switchStep('stepAuth');
+    switchTab(authReq === 'login' ? 'login' : 'register');
+  }
+});
+
+function switchStep(id) {
+  document.querySelectorAll('.step').forEach(function (s) { s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+async function verifySession() {
+  var r = await api('/api/auth/me');
+  if (r.error) { token = null; localStorage.removeItem('ps_token'); switchStep('stepAuth'); switchTab('register'); return; }
+  enterPicker(r.user);
+}
+
+function enterPicker(user) {
+  var greet = document.getElementById('pickGreeting');
+  if (greet && user && user.name) greet.textContent = 'You\'re in, ' + user.name.split(' ')[0];
+  var email = document.getElementById('pickUserEmail');
+  if (email && user) email.textContent = user.email || '';
+  if (pendingPlan) {
+    document.querySelectorAll('#industryGrid .tile').forEach(function (a) {
+      a.href = '/' + a.dataset.slug + '/?plan=' + encodeURIComponent(pendingPlan);
+    });
+  }
+  switchStep('stepPick');
+}
+
+function doLogout() {
+  token = null; localStorage.removeItem('ps_token');
+  switchStep('stepAuth'); switchTab('login');
+}
+
+/* ── tabs ── */
+function switchTab(t) {
+  document.querySelectorAll('.auth-tab').forEach(function (b, i) {
+    b.classList.toggle('active', (i === 0 && t === 'login') || (i === 1 && t === 'register'));
+  });
+  ['loginForm','registerForm','forgotForm','resetForm'].forEach(function (id) {
+    var el = document.getElementById(id); if (el) el.classList.add('hidden');
+  });
+  document.getElementById(t === 'login' ? 'loginForm' : 'registerForm').classList.remove('hidden');
+  document.getElementById('authHeading').textContent = t === 'login' ? 'Welcome back' : 'Create your free account';
+  document.getElementById('authSub').textContent = t === 'login' ? 'Sign in to your Express Briefs account' : 'Free to start — no credit card required.';
+  var tabs = document.getElementById('authTabs'); if (tabs) tabs.style.display = '';
+}
+
+function showForgot() {
+  ['loginForm','registerForm','resetForm'].forEach(function (id) { document.getElementById(id).classList.add('hidden'); });
+  document.getElementById('forgotForm').classList.remove('hidden');
+  document.getElementById('authTabs').style.display = 'none';
+  document.getElementById('authHeading').textContent = 'Reset password';
+  document.getElementById('authSub').textContent = "We'll send a reset link to your inbox";
+  document.getElementById('forgotEmail').value = '';
+  document.getElementById('forgotError').style.display = 'none';
+}
+function hideForgot() {
+  document.getElementById('forgotForm').classList.add('hidden');
+  document.getElementById('resetForm').classList.add('hidden');
+  switchTab('login');
+}
+
+/* ── auth actions ── */
+async function login() {
+  var e = document.getElementById('loginEmail').value.trim(), p = document.getElementById('loginPassword').value;
+  var err = document.getElementById('loginError'), btn = document.getElementById('loginBtn');
+  err.style.display = 'none';
+  if (!e || !p) { showErr(err, 'Enter your email and password'); return; }
+  btn.disabled = true; btn.childNodes[0].textContent = 'Signing in... ';
+  var r = await apiNA('/api/auth/login', { method: 'POST', body: { email: e, password: p } });
+  btn.disabled = false; btn.childNodes[0].textContent = 'Sign In ';
+  if (r.error) { showErr(err, r.error); return; }
+  token = r.token; localStorage.setItem('ps_token', token);
+  if (redirectAfterAuth) { window.location.href = redirectAfterAuth; return; }
+  enterPicker(r.user);
+}
+
+async function register() {
+  var n = document.getElementById('regName').value.trim(), e = document.getElementById('regEmail').value.trim(), p = document.getElementById('regPassword').value;
+  var err = document.getElementById('registerError'), btn = document.getElementById('registerBtn');
+  err.style.display = 'none';
+  if (!n || !e || !p) { showErr(err, 'All fields are required'); return; }
+  btn.disabled = true; btn.childNodes[0].textContent = 'Creating account... ';
+  var r = await apiNA('/api/auth/register', { method: 'POST', body: { name: n, email: e, password: p, next: redirectAfterAuth || undefined } });
+  btn.disabled = false; btn.childNodes[0].textContent = 'Create Free Account ';
+  if (r.error) { showErr(err, r.error); return; }
+  token = r.token; localStorage.setItem('ps_token', token);
+  toast('Welcome to Express Briefs!', 'success');
+  if (redirectAfterAuth) { window.location.href = redirectAfterAuth; return; }
+  enterPicker(r.user);
+}
+
+var _resetToken = null;
+async function forgotPassword() {
+  var email = document.getElementById('forgotEmail').value.trim();
+  var errEl = document.getElementById('forgotError'), sucEl = document.getElementById('forgotSuccess'), btn = document.getElementById('forgotBtn');
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
+  if (!email) { errEl.textContent = 'Please enter your email address.'; errEl.style.display = 'block'; return; }
+  btn.disabled = true; btn.childNodes[0].textContent = 'Sending... ';
+  var r = await apiNA('/api/auth/forgot-password', { method: 'POST', body: { email: email } });
+  btn.disabled = false; btn.childNodes[0].textContent = 'Send Reset Link ';
+  if (r.error) { errEl.textContent = r.error; errEl.style.display = 'block'; }
+  else { sucEl.textContent = r.message || 'Check your inbox for the reset link.'; sucEl.style.display = 'block'; }
+}
+async function doResetPassword() {
+  var pw = document.getElementById('resetPassword').value, cf = document.getElementById('resetConfirm').value;
+  var errEl = document.getElementById('resetError'), btn = document.getElementById('resetBtn');
+  errEl.style.display = 'none';
+  if (!pw || pw.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
+  if (pw !== cf) { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
+  btn.disabled = true; btn.childNodes[0].textContent = 'Saving... ';
+  var r = await apiNA('/api/auth/reset-password', { method: 'POST', body: { token: _resetToken, password: pw } });
+  btn.disabled = false; btn.childNodes[0].textContent = 'Set New Password ';
+  if (r.error) { errEl.textContent = r.error; errEl.style.display = 'block'; }
+  else { toast('Password updated! Please log in.', 'success'); hideForgot(); }
+}
+
+function togglePw(inputId, btn) {
+  var inp = document.getElementById(inputId);
+  var isText = inp.type === 'text';
+  inp.type = isText ? 'password' : 'text';
+  btn.innerHTML = isText
+    ? '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg>'
+    : '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 20 20"><path d="M3 3l14 14M10 4c3.5 0 6.5 2.5 8 5.5-.5 1-1.2 1.9-2.1 2.7M6.3 6.6A8.8 8.8 0 0 0 2 9.5c1.5 3 4.5 5.5 8 5.5 1.4 0 2.8-.4 4-1" stroke-linecap="round"/></svg>';
+  btn.setAttribute('aria-label', isText ? 'Show password' : 'Hide password');
+}
+
+function showErr(el, m) { el.textContent = m; el.style.display = 'block'; }
+function toast(m, t) { var el = document.getElementById('toast'); el.textContent = m; el.className = 'toast show ' + (t || 'info'); clearTimeout(window._tt); window._tt = setTimeout(function () { el.classList.remove('show'); }, 3500); }
+
+async function api(path, opts) {
+  try { var r = await fetch(path, { method: (opts && opts.method) || 'GET', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: opts && opts.body ? JSON.stringify(opts.body) : undefined }); return r.json(); }
+  catch (e) { return { error: 'Network error: ' + e.message }; }
+}
+async function apiNA(path, opts) {
+  try { var r = await fetch(path, { method: (opts && opts.method) || 'GET', headers: { 'Content-Type': 'application/json' }, body: opts && opts.body ? JSON.stringify(opts.body) : undefined }); return r.json(); }
+  catch (e) { return { error: 'Network error: ' + e.message }; }
+}
+</script>
+<script src="/assets/analytics.js" defer></script>
+</body>
+</html>
