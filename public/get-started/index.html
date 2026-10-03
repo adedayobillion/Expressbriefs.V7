@@ -379,7 +379,7 @@ function enterPicker(user) {
 
 function doLogout() {
   token = null; localStorage.removeItem('ps_token');
-  switchStep('stepAuth'); switchTab('login');
+  window.location.href = '/';
 }
 
 /* ── tabs ── */
